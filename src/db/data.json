@@ -1,0 +1,29 @@
+{
+    "students": [
+        {
+    "id": 1,
+    "name": "Pepe",
+    "groupId": 1,
+    "cityId": 2
+        }
+    ],
+    "groups": [
+        {
+    "id": 4,
+    "name": "A-56",
+    "professorId": 4
+        }
+    ],
+    "cities": [
+        {
+    "id": 1,
+    "name": "havana"
+        }
+    ],
+    "professors": [
+        {
+    "id": 1,
+    "name": "Julio"
+        }
+    ]
+}
