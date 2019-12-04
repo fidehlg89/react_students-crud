@@ -1,18 +1,10 @@
-import React, { Component } from "react"
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css';
-import Layout from "./components/layout"
-import StudentList from "./components/student/index"
+import React from "react"
+import StudentList from './pages/student'
 
-class App extends Component {
-  render(){
-    return (      
-        <Layout className="col-xs-12">
-          <StudentList/>
-        </Layout> 
-      
+function App(props) {
+    return (
+        <StudentList />
     );
-  }  
-}
 
+}
 export default App;
