@@ -5,7 +5,7 @@ function Layout(props) {
   return (
     <div>
       <Navigation title="ESTUDIANTES"></Navigation>
-      <div className="container row">
+      <div className=" ">
         {
           props.children
         }
