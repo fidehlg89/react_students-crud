@@ -23,7 +23,7 @@ class StudentList extends React.Component {
         })
     }
 
-    onNewStudent() {
+    onNewStudent = () => {
         this.setState({
             items: [
                 ...this.state.items,
@@ -33,10 +33,10 @@ class StudentList extends React.Component {
                     edad: this.refs.theTextEdadInput.value,
                     sexo: this.refs.theTextSexoInput.value,
                     email: this.refs.theTextEmailInput.value,
-                    born: Date.now(),
+                    born: this.refs.theTextFecNacInput.value,
                     place: this.refs.theTextLugNacInput.value,
                     group: this.refs.theTextGroupInput.value,
-                },
+                },               
             ],
             isCreating: false,
         })
@@ -60,7 +60,7 @@ class StudentList extends React.Component {
                             ref="theTextGroupInput" />
                     </div>
                     <button
-                        onClick={() => this.onNewStudent(this.state.id)}
+                        onClick={this.onNewStudent}
                         className="form-control btn btn-success btn-sm">Guardar
                     </button>
                     <button
@@ -73,46 +73,58 @@ class StudentList extends React.Component {
     }
 
     //Editando Estudiantes
-    onUpdateStudent = (student) => {
+    onUpdateStudent = (i) => {
+        const { items } = this.state;
+        const index = items.findIndex(n => n.id === i);
+        if (index === -1) {
+            return;
+        }        
         this.setState({
             isUpdating: !this.state.isUpdating,
-            id: student.id
+            id: index
         })
     }
 
-    onEditStudent = (id) => {
-        let student = this.state.items[this.state.id];
-        student.name = this.refs.theTextNameInput.value;
-        student.edad = this.refs.theTextEdadInput.value;
-        student.sexo = this.refs.theTextSexoInput.value;
-        student.email = this.refs.theTextEmailInput.value;
-        student.born = Date.now();
-        student.place = this.refs.theTextLugNacInput.value;
-        student.group = this.refs.theTextGroupInput.value;
+    onEditStudent = () => {
+        const id=this.state.id
+        let student=this.state.items[id]
+
+        student.name=this.refs.theTextNameInput.value
+        student.email=this.refs.theTextEmailInput.value
+        student.edad=this.refs.theTextEdadInput.value
+        student.sexo=this.refs.theTextSexoInput.value
+        student.born=this.refs.theTextFecNacInput.value
+        student.place=this.refs.theTextLugNacInput.value
+        student.group=this.refs.theTextGroupInput.value
 
         this.setState({
             isUpdating: false,
         })
     }
 
-    renderUpdateview() {
+    renderUpdateview = (id) => { 
+        const student= this.state.items[id];
         return <div className="student-item-create col-md-6" align="center">
             <h5>Editar Estudiante</h5>
             <form className="form-horizontal">
                 <div className="form-group" align="center">
                     <div className="">
+                        <input className="form-control" hidden type="number" ref="theTextIDInput"
+                            defaultValue={id} key={id} />
                         <input className="form-control" type="text" placeholder="Nombre" ref="theTextNameInput"
-                            defaultValue={this.state.items[this.state.id].name} />
-                        <input className="form-control" type="email" placeholder="Email" ref="theTextEmailInput" defaultValue='fidel@mail.com' />
-                        <input className="form-control" type="number" placeholder="Edad" ref="theTextEdadInput" defaultValue='25' />
-                        <input className="form-control" type="text" placeholder="Sexo" ref="theTextSexoInput" defaultValue='Fidel' />
-                        <input className="form-control" type="text" placeholder="Fecha de Nacimiento" defaultValue='Fidel'
+                            defaultValue={student.name} />
+                        <input className="form-control" type="email" placeholder="Email" ref="theTextEmailInput" defaultValue={student.email} />
+                        <input className="form-control" type="number" placeholder="Edad" ref="theTextEdadInput" defaultValue={student.edad} />
+                        <input className="form-control" type="text" placeholder="Sexo" ref="theTextSexoInput" defaultValue={student.sexo} />
+                        <input className="form-control" type="text" placeholder="Fecha de Nacimiento" defaultValue={student.born}
                             ref="theTextFecNacInput" />
-                        <input className="form-control" type="text" placeholder="Lugar de Nacimiento" defaultValue='Fidel'
-                            ref="theTextLugNacNacInput" />
+                        <input className="form-control" type="text" placeholder="Lugar de Nacimiento" defaultValue={student.place}
+                            ref="theTextLugNacInput" />
+                        <input className="form-control" type="text" placeholder="Grupo" defaultValue={student.group}
+                            ref="theTextGroupInput" />
                     </div>
                     <button
-                        onClick={() => this.onEditStudent(this.state.id)}
+                        onClick={this.onEditStudent}
                         className="form-control btn btn-success btn-sm">Guardar
                 </button>
                     <button
@@ -140,7 +152,7 @@ class StudentList extends React.Component {
         const { items } = this.state;
         let itemslist = items.map(item =>
             <tr className="">
-                <th className="">
+                <th className="" key={item.id}>
                     {item.id}
                 </th>
                 <th className="">
@@ -169,7 +181,7 @@ class StudentList extends React.Component {
                     <div>
                         <button className="btn btn-default btn-sm" onClick={() => this.changeEditMode(item.id - 1)}><FaEye />
                         </button>
-                        <button className="btn btn-default btn-sm" onClick={() => this.onUpdateStudent(item)}><FaPen />
+                        <button className="btn btn-default btn-sm" onClick={() => this.onUpdateStudent(item.id)}><FaPen />
                         </button>
                         <button className="btn btn-default btn-sm" onClick={() => this.onDeleteStudent(item)}><FaTrash />
                         </button>
@@ -213,7 +225,7 @@ class StudentList extends React.Component {
                 <Layout>
                     {this.state.isCreating || this.state.isUpdating ? '' : this.renderDefaultview()}
                     {this.state.isCreating ? this.renderCreateview() : ''}
-                    {this.state.isUpdating ? this.renderUpdateview() : ''}
+                    {this.state.isUpdating ? this.renderUpdateview(this.state.id) : ''}
                 </Layout>
             </div>
 

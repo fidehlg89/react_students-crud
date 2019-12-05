@@ -12,9 +12,9 @@ class Navigation extends Component{
     render(){
         return(
             <nav className="navbar navbar-dark bg-dark">
-               <a className="text-white"> 
+               <span className="text-white"> 
                 { this.props.title }
-               </a>
+               </span>
                 {this.props.children} 
             </nav>
         )

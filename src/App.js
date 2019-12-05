@@ -1,10 +1,14 @@
 import React from "react"
 import StudentList from './pages/student'
 
-function App(props) {
-    return (
-        <StudentList />
-    );
+class App extends React.Component {
+
+    render(){
+        return (
+            <StudentList />
+        );
+    }
+    
 
 }
 export default App;
