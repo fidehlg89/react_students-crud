@@ -1,24 +1,22 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 
-class Navigation extends Component{
+class Navigation extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={            
+        this.state = {
             props
         }
     }
 
-    render(){
-        return(
-            <nav className="navbar navbar-dark bg-dark">
-               <span className="text-white"> 
-                { this.props.title }
-               </span>
-                {this.props.children} 
-            </nav>
+    render() {
+        return (
+            <div className="navbar navbar-dark bg-dark navbar-fixed-top text-white">
+                <a href="/" className="navbar-brand">Estudiantes</a> 
+                {this.props.children}
+            </div>
         )
-    }    
+    }
 }
 
 export default Navigation
