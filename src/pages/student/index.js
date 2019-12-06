@@ -1,14 +1,17 @@
 import React from "react";
-import { FaEye, FaPen, FaTrash } from 'react-icons/fa'
+import { FaPen, FaTrash } from 'react-icons/fa'
 import Layout from "./../../components/layout"
-import './style.css'
+import Navigation from '../../components/navigation'
+import "./style.css"
+import { students } from "../../db/data.json"
+
 
 class StudentList extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            items: [],
+            items: students,
             id: '',
             isCreating: false,
             isUpdating: false,
@@ -33,10 +36,10 @@ class StudentList extends React.Component {
                     edad: this.refs.theTextEdadInput.value,
                     sexo: this.refs.theTextSexoInput.value,
                     email: this.refs.theTextEmailInput.value,
-                    born: this.refs.theTextFecNacInput.value,
-                    place: this.refs.theTextLugNacInput.value,
+                    fecha_nac: this.refs.theTextFecNacInput.value,
+                    lugar_nac: this.refs.theTextLugNacInput.value,
                     group: this.refs.theTextGroupInput.value,
-                },               
+                },
             ],
             isCreating: false,
         })
@@ -78,7 +81,7 @@ class StudentList extends React.Component {
         const index = items.findIndex(n => n.id === i);
         if (index === -1) {
             return;
-        }        
+        }
         this.setState({
             isUpdating: !this.state.isUpdating,
             id: index
@@ -86,24 +89,24 @@ class StudentList extends React.Component {
     }
 
     onEditStudent = () => {
-        const id=this.state.id
-        let student=this.state.items[id]
+        const id = this.state.id
+        let student = this.state.items[id]
 
-        student.name=this.refs.theTextNameInput.value
-        student.email=this.refs.theTextEmailInput.value
-        student.edad=this.refs.theTextEdadInput.value
-        student.sexo=this.refs.theTextSexoInput.value
-        student.born=this.refs.theTextFecNacInput.value
-        student.place=this.refs.theTextLugNacInput.value
-        student.group=this.refs.theTextGroupInput.value
+        student.name = this.refs.theTextNameInput.value
+        student.email = this.refs.theTextEmailInput.value
+        student.edad = this.refs.theTextEdadInput.value
+        student.sexo = this.refs.theTextSexoInput.value
+        student.fecha_nac = this.refs.theTextFecNacInput.value
+        student.lugar_nac = this.refs.theTextLugNacInput.value
+        student.group = this.refs.theTextGroupInput.value
 
         this.setState({
             isUpdating: false,
         })
     }
 
-    renderUpdateview = (id) => { 
-        const student= this.state.items[id];
+    renderUpdateview = (id) => {
+        const student = this.state.items[id];
         return <div className="student-item-create col-md-6" align="center">
             <h5>Editar Estudiante</h5>
             <form className="form-horizontal">
@@ -116,9 +119,9 @@ class StudentList extends React.Component {
                         <input className="form-control" type="email" placeholder="Email" ref="theTextEmailInput" defaultValue={student.email} />
                         <input className="form-control" type="number" placeholder="Edad" ref="theTextEdadInput" defaultValue={student.edad} />
                         <input className="form-control" type="text" placeholder="Sexo" ref="theTextSexoInput" defaultValue={student.sexo} />
-                        <input className="form-control" type="text" placeholder="Fecha de Nacimiento" defaultValue={student.born}
+                        <input className="form-control" type="text" placeholder="Fecha de Nacimiento" defaultValue={student.fecha_nac}
                             ref="theTextFecNacInput" />
-                        <input className="form-control" type="text" placeholder="Lugar de Nacimiento" defaultValue={student.place}
+                        <input className="form-control" type="text" placeholder="Lugar de Nacimiento" defaultValue={student.lugar_nac}
                             ref="theTextLugNacInput" />
                         <input className="form-control" type="text" placeholder="Grupo" defaultValue={student.group}
                             ref="theTextGroupInput" />
@@ -151,8 +154,8 @@ class StudentList extends React.Component {
     renderDefaultview = () => {
         const { items } = this.state;
         let itemslist = items.map(item =>
-            <tr className="">
-                <th className="" key={item.id}>
+            <tr className="" key={item.id}>
+                <th className="">
                     {item.id}
                 </th>
                 <th className="">
@@ -168,10 +171,10 @@ class StudentList extends React.Component {
                     {item.email}
                 </th>
                 <th className="">
-                    {item.born}
+                    {item.fecha_nac}
                 </th>
                 <th className="">
-                    {item.place}
+                    {item.lugar_nac}
                 </th>
                 <th className="">
                     {item.group}
@@ -179,49 +182,50 @@ class StudentList extends React.Component {
 
                 <th className="">
                     <div>
-                        <button className="btn btn-default btn-sm" onClick={() => this.changeEditMode(item.id - 1)}><FaEye />
+                        <button className="btn btn-default btn-sm btn-success" onClick={() => this.onUpdateStudent(item.id)}><FaPen />
                         </button>
-                        <button className="btn btn-default btn-sm" onClick={() => this.onUpdateStudent(item.id)}><FaPen />
-                        </button>
-                        <button className="btn btn-default btn-sm" onClick={() => this.onDeleteStudent(item)}><FaTrash />
+                        <span> </span>
+                        <button className="btn btn-default btn-sm btn-danger" onClick={() => this.onDeleteStudent(item)}><FaTrash />
                         </button>
                     </div>
-
                 </th>
             </tr>
         )
         return <div>
             {
-
-                <div className="">
-                    <h5>Listado de Estudiantes</h5>
-                    <button className="new-student-item btn btn-primary btn-sm" onClick={this.onCreateStudent}>
-                        Nuevo Estudiante
-                            </button>
-                    <table className="table table-striped table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nombre</th>
-                                <th>Edad</th>
-                                <th>Sexo</th>
-                                <th>Email</th>
-                                <th>Fecha de Nacimiento</th>
-                                <th>Lugar de Nacimiento</th>
-                                <th>Grupo</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>{itemslist}</tbody>
-                    </table>
-                </div>
-
+                <section className="panel">
+                    <h5 className="panel-heading">Listado de Estudiantes</h5>
+                    <button className="new-student-item btn btn-primary btn-sm"
+                        onClick={this.onCreateStudent}> Nuevo Estudiante
+                        </button>
+                    <div className="panel-body">
+                        {(itemslist.length > 0) ? (<div>
+                            <table className="table table-responsive table-striped table-hover">
+                                <thead className="text-info">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Edad</th>
+                                        <th>Sexo</th>
+                                        <th>Email</th>
+                                        <th>Fecha de Nacimiento</th>
+                                        <th>Lugar de Nacimiento</th>
+                                        <th>Grupo</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="">{itemslist}</tbody>
+                            </table></div>
+                        ) : <p className="text-danger">No existen estudiantes, haga click en el botón Nuevo estudiante</p>}
+                    </div>
+                </section>
             }
         </div>
     }
     render() {
         return (
             <div>
+                <Navigation title="ESTUDIANTES"></Navigation>
                 <Layout>
                     {this.state.isCreating || this.state.isUpdating ? '' : this.renderDefaultview()}
                     {this.state.isCreating ? this.renderCreateview() : ''}

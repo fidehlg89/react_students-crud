@@ -1,0 +1,76 @@
+{
+    "students": [
+        {
+            "id": 1,
+            "name": "Pepe",
+            "email":"pepe@mail.com",
+            "edad":25,
+            "sexo":"M", 
+            "fecha_nac": "80194", 
+            "lugar_nac":"Hlg",          
+            "groupId": 1,
+            "cityId": 2
+        },
+        {
+            "id": 2,
+            "name": "Juan",
+            "email":"juan@mail.com",
+            "edad":30,
+            "sexo":"M", 
+            "fecha_nac": "101089", 
+            "lugar_nac":"Hlg",  
+            "groupId": 1,
+            "cityId": 2
+        }
+    ],
+    "groups": [
+        {
+            "id": 1,
+            "name": "A-10",
+            "professorId": 2
+        },
+        {
+            "id": 2,
+            "name": "A-25",
+            "professorId": 2
+        },
+        {
+            "id": 3,
+            "name": "A-30",
+            "professorId": 3
+        },
+        {
+            "id": 4,
+            "name": "A-56",
+            "professorId": 4
+        }
+    ],
+    "cities": [
+        {
+            "id": 1,
+            "name": "havana"
+        },
+        {
+            "id": 2,
+            "name": "matanzas"
+        }
+    ],
+    "professors": [
+        {
+            "id": 1,
+            "name": "Julio"
+        },
+        {
+            "id": 2,
+            "name": "Pedro"
+        },
+        {
+            "id": 3,
+            "name": "Pablo"
+        },
+        {
+            "id": 4,
+            "name": "Jos�"
+        }
+    ]
+}

@@ -5,7 +5,9 @@ class App extends React.Component {
 
     render(){
         return (
-            <StudentList />
+            <div className="container">
+                <StudentList />
+            </div>
         );
     }
     
