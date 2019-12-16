@@ -6,8 +6,8 @@
             "email":"pepe@mail.com",
             "edad":25,
             "sexo":"M", 
-            "fecha_nac": "80194", 
-            "lugar_nac":"Hlg",          
+            "fecha_nac": "08/01/94", 
+            "lugar_nac":"Tokio",          
             "groupId": 1,
             "cityId": 2
         },
@@ -17,8 +17,30 @@
             "email":"juan@mail.com",
             "edad":30,
             "sexo":"M", 
-            "fecha_nac": "101089", 
-            "lugar_nac":"Hlg",  
+            "fecha_nac": "10/10/89", 
+            "lugar_nac":"Los Angeles",  
+            "groupId": 1,
+            "cityId": 2
+        },
+        {
+            "id": 1,
+            "name": "Peter",
+            "email":"peter@mail.com",
+            "edad":28,
+            "sexo":"M", 
+            "fecha_nac": "01/08/92", 
+            "lugar_nac":"Londres",          
+            "groupId": 1,
+            "cityId": 2
+        },
+        {
+            "id": 3,
+            "name": "Pablo",
+            "email":"pablon@mail.com",
+            "edad":31,
+            "sexo":"M", 
+            "fecha_nac": "09/02/88", 
+            "lugar_nac":"Tokio",  
             "groupId": 1,
             "cityId": 2
         }
@@ -48,11 +70,23 @@
     "cities": [
         {
             "id": 1,
-            "name": "havana"
+            "name": "Tokio"
         },
         {
             "id": 2,
-            "name": "matanzas"
+            "name": "New York"
+        },
+        {
+            "id": 3,
+            "name": "Los Ángeles"
+        }, 
+        {
+            "id": 4,
+            "name": "Londres"
+        },
+        {
+            "id": 4,
+            "name": "China"
         }
     ],
     "professors": [

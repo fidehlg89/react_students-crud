@@ -10,7 +10,7 @@ class Form extends React.Component {
     }
 
     render() {
-        return <form className="form-horizontal" encType="multipart/form-data">            
+        return <form className="form-horizontal">            
             <div className="form-group" align="center">
                 {this.props.children}
             </div>

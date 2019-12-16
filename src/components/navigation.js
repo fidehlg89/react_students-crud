@@ -1,6 +1,18 @@
-import React, { Component } from "react";
+import React from 'react';
 
-class Navigation extends Component {
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink
+} from 'reactstrap';
+
+
+
+class Navigation extends React.Component {
 
     constructor(props) {
         super(props);
@@ -11,11 +23,20 @@ class Navigation extends Component {
 
     render() {
         return (
-            <div className="navbar navbar-dark bg-dark navbar-fixed-top text-white">
-                <a href="/" className="navbar-brand">Estudiantes</a> 
-                {this.props.children}
-            </div>
+            <Navbar color="dark" light expand="md">
+                <NavbarBrand className="text-white" href="/">Estudiantes</NavbarBrand>
+                <NavbarToggler />
+                <Collapse navbar>
+                    <Nav className="mr-auto" navbar>
+                        <NavItem>
+                            <NavLink className="text-white" href="/groups/" onClick={this.handleClick}>Grupos</NavLink>
+                        </NavItem>
+                    </Nav>
+                </Collapse>
+            </Navbar>
         )
+
+
     }
 }
 

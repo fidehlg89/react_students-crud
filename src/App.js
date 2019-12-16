@@ -3,14 +3,12 @@ import StudentList from './pages/student'
 
 class App extends React.Component {
 
-    render(){
+    render() {
         return (
-            <div className="container">
-                <StudentList />
-            </div>
+            <StudentList />
         );
     }
-    
+
 
 }
 
