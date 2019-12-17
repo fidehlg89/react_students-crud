@@ -34,7 +34,7 @@ class StudentList extends React.Component {
         })
     }
     renderCreateview() {
-        const { citiOption, groupOption, proffesorOption, options, groups, professors } = this.state;
+        const { citiOption, groupOption, options, groups } = this.state;
         return <div className="student-item-create">
             <h5>Crear Estudiante</h5>
             <Form>
@@ -184,13 +184,13 @@ class StudentList extends React.Component {
                 <th>
                     {item.fecha_nac}
                 </th>
-                <th className="">
+                <th>
                     {item.lugar_nac}
                 </th>
-                <th className="">
+                <th>
                     {item.group}
                 </th>
-                <th className="">
+                <th>
                     <div>
                         <button className="btn btn-default btn-sm btn-success" onClick={() => this.onUpdateStudent(item.id)}><FaPen />
                         </button>

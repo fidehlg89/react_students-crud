@@ -24,7 +24,7 @@ class Navigation extends React.Component {
     render() {
         return (
             <Navbar color="dark" light expand="md">
-                <NavbarBrand className="text-white" href="/">Estudiantes</NavbarBrand>
+                <NavbarBrand className="text-white" href="/students">Estudiantes</NavbarBrand>
                 <NavbarToggler />
                 <Collapse navbar>
                     <Nav className="mr-auto" navbar>

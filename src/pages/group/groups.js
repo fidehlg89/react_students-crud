@@ -16,29 +16,24 @@ class GroupList extends React.Component {
         this.onNewGroup = this.onNewGroup.bind(this);
     }
     onCreateGroup = () => {
-        let grouplist = groups.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
-        )
         let professorlist = professors.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>{item.name}</option>
         )
 
-        this.setState({
-            groups: grouplist,
+        this.setState({            
             professors: professorlist,
             isCreating: !this.state.isCreating,
         })
     }
     renderCreateview() {
         const { proffesorOption, professors } = this.state;
-        return <div className="student-item-create">
+        return <div className="group-item-create">
             <h5>Crear Grupo</h5>
             <Form>
                 <input className="form-control" type="text" placeholder="Nombre" ref="theTextNameInput" />
                 <div className="form-control">
                     <span>Seleccione Profesor: </span>
-                    <label>Seleccione un Profesor</label>
-                    <select className="col-sm-4" value={proffesorOption} ref="theTextProffesorInput" onChange={this.handleProfSelect}>{professors}</select>
+                    <select className="" value={proffesorOption} ref="theTextProffesorInput" onChange={this.handleProfSelect}>{professors}</select>
                 </div>
                 <button
                     onClick={this.onNewGroup}
@@ -46,7 +41,7 @@ class GroupList extends React.Component {
                         </button>
                 <button
                     onClick={this.isCreating}
-                    className="form-control btn btn-danger btn-sm"> Cancelar
+                    className="form-control btn btn-danger btn-sm">Cancelar
                 </button>
             </Form>
         </div>
@@ -58,7 +53,7 @@ class GroupList extends React.Component {
                 {
                     id: Date.now(),
                     name: this.refs.theTextNameInput.value,
-                    professorId: this.refs.theTextProfessorInput.value,
+                    professorId: this.refs.theTextProffesorInput.value,
                 },
             ],
             isCreating: false,
@@ -67,19 +62,15 @@ class GroupList extends React.Component {
 
     //Editando Grupos
     onUpdateGroup = (i) => {
-        const { students } = this.state;
-        const index = students.findIndex(n => n.id === i);
+        const { groups } = this.state;
+        const index = groups.findIndex(n => n.id === i);
         if (index === -1) {
             return;
         }
-        let citieslist = cities.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
-        )
         let grouplist = groups.map(item =>
             <option value={item.name} key={item.id}>{item.name}</option>
         )
         this.setState({
-            options: citieslist,
             groups: grouplist,
             isUpdating: !this.state.isUpdating,
             id: index,
@@ -87,36 +78,24 @@ class GroupList extends React.Component {
     }
     onEditGroup = () => {
         const id = this.state.id
-        let student = this.state.students[id]
+        let group = this.state.groups[id]
 
-        student.name = this.refs.theTextNameInput.value
-        student.professorId = this.refs.theTextGroupInput.value
+        group.name = this.refs.theTextNameInput.value
+        group.professorId = this.refs.theTextGroupInput.key
 
         this.setState({
             isUpdating: !this.state.isUpdating,
-        })
+        })        
     }
 
     renderUpdateview = (id) => {
-        const student = this.state.students[id];
-        const { citiOption, groupOption, proffesorOption, options, groups, proffesors } = this.state;
-        return <div className="student-item-create" align="center">
+        const group = this.state.groups[id];
+        const { proffesorOption, proffesors } = this.state;
+        return <div className="group-item-create" align="center">
             <h5>Editar Grupo</h5>
             <Form>
-                <input className="form-control" type="email" placeholder="Email" ref="theTextEmailInput" defaultValue={student.email} />
-                <input className="form-control" hidden type="number" ref="theTextIDInput"
-                    defaultValue={id} key={id} />
-                <input className="form-control" type="text" placeholder="Nombre" ref="theTextNameInput"
-                    defaultValue={student.name} />
-                <input className="form-control" type="number" placeholder="Edad" ref="theTextEdadInput" defaultValue={student.edad} />
-                <input className="form-control" type="text" placeholder="Sexo" ref="theTextSexoInput" defaultValue={student.sexo} />
-                <input className="form-control" type="text" placeholder="Fecha de Nacimiento" defaultValue={student.fecha_nac}
-                    ref="theTextFecNacInput" />
-
-                <select className="form-control" value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} defaultValue={student.lugar_nac}>{options}</select>
-                <select className="" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} defaultValue={student.group}>{groups}</select>
-                <select className="" value={proffesorOption} ref="theTextProffesorInput" onChange={this.handleProfSelect}>{proffesors}</select>
-
+                <input className="form-control" type="email" placeholder="Name" ref="theTextEmailInput" defaultValue={group.email} />
+                <select className="" value={proffesorOption} onChange={this.handleProfSelect} ref="theTextProffesorInput">{proffesors}</select>
                 <button
                     onClick={this.onEditGroup}
                     className="form-control btn btn-success btn-sm">Guardar
@@ -130,7 +109,6 @@ class GroupList extends React.Component {
 
     //Eliminando Grupo
     onDeleteGroup = (groups) => {
-        const { groups } = this.state;
         const index = groups.findIndex(n => n.id === groups.id);
         if (index === -1) {
             return;
@@ -142,34 +120,16 @@ class GroupList extends React.Component {
         });
     }
 
-    //Vista Principal del CRUD Grupo
+    //Vista Principal del CRUD Grupos
     renderDefaultview = () => {
-        const { groups } = this.state;
+        const { groups, professors } = this.state;
         let itemslist = groups.map(item =>
             <tr key={item.id}>
-                <th hidden>
-                    {item.id}
-                </th>
                 <th>
                     {item.name}
                 </th>
                 <th>
-                    {item.edad}
-                </th>
-                <th>
-                    {item.sexo}
-                </th>
-                <th>
-                    {item.email}
-                </th>
-                <th>
-                    {item.fecha_nac}
-                </th>
-                <th className="">
-                    {item.lugar_nac}
-                </th>
-                <th className="">
-                    {item.group}
+                    {professors['professorId'].name}
                 </th>
                 <th className="">
                     <div>
@@ -194,14 +154,8 @@ class GroupList extends React.Component {
                             <table className="table table-striped table-hover">
                                 <thead className="text-info">
                                     <tr>
-                                        <th hidden>#</th>
                                         <th>Nombre</th>
-                                        <th>Edad</th>
-                                        <th>Sexo</th>
-                                        <th>Email</th>
-                                        <th>Fecha de Nacimiento</th>
-                                        <th>Lugar de Nacimiento</th>
-                                        <th>Grupo</th>
+                                        <th>Profesor</th>
                                         <th></th>
                                     </tr>
                                 </thead>

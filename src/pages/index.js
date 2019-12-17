@@ -11,6 +11,7 @@ import {
 } from 'reactstrap'
 
 class MainContainer extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -143,13 +144,10 @@ class MainContainer extends React.Component {
             <div>
                 <Navigation>
                     <NavItem>
-                        <NavLink className="text-white" href="/groups/" onClick={this.handleClick}>Grupos</NavLink>
+                        <NavLink className="text-white" href="/groups/">Grupos</NavLink>
                     </NavItem></Navigation>
-                <Layout>
-                     
-                </Layout>
+                <Layout/>
             </div>
-
         )
     }
 }
