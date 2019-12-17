@@ -1,24 +1,24 @@
 import { handleActions, combineActions } from 'redux-actions';
 import {
-  createTodo,
-  createTodoSuccess,
-  createTodoFailure,
-  deleteTodo,
-  deleteTodoSuccess,
-  deleteTodoFailure,
-  updateTodo,
-  updateTodoSuccess,
-  updateTodoFailure,
-  patchTodo,
-  patchTodoSuccess,
-  patchTodoFailure,
-  getTodo,
-  getTodoSuccess,
-  getTodoFailure,
-  getAllTodos,
-  getAllTodosSuccess,
-  getAllTodosFailure,
-} from '../actions/todos';
+  createStudent,
+  createStudentSuccess,
+  createStudentFailure,
+  deleteStudent,
+  deleteStudentSuccess,
+  deleteStudentFailure,
+  updateStudent,
+  updateStudentSuccess,
+  updateStudentFailure,
+  patchStudent,
+  patchStudentSuccess,
+  patchStudentFailure,
+  getStudent,
+  getStudentSuccess,
+  getStudentFailure,
+  getAllStudents,
+  getAllStudentsSuccess,
+  getAllStudentsFailure,
+} from '../actions/students';
 
 const defaultState = {
   data: [],
@@ -29,12 +29,12 @@ const defaultState = {
 
 export default handleActions({
   [combineActions(
-    createTodo,
-    deleteTodo,
-    updateTodo,
-    patchTodo,
-    getTodo,
-    getAllTodos,
+    createStudent,
+    deleteStudent,
+    updateStudent,
+    patchStudent,
+    getStudent,
+    getAllStudents,
   )]: state => ({
     ...state,
     isLoading: true,
@@ -43,12 +43,12 @@ export default handleActions({
   }),
 
   [combineActions(
-    createTodoFailure,
-    deleteTodoFailure,
-    updateTodoFailure,
-    patchTodoFailure,
-    getTodoFailure,
-    getAllTodosFailure,
+    createStudentFailure,
+    deleteStudentFailure,
+    updateStudentFailure,
+    patchStudentFailure,
+    getStudentFailure,
+    getAllStudentsFailure,
   )]: (state, action) => ({
     ...state,
     isLoading: false,
@@ -57,7 +57,7 @@ export default handleActions({
     errorMessage: action.payload,
   }),
 
-  [createTodoSuccess]: (state, action) => ({
+  [createStudentSuccess]: (state, action) => ({
     ...state,
     isLoading: false,
     isSuccess: true,
@@ -65,7 +65,7 @@ export default handleActions({
     data: [...state.data, action.payload],
   }),
 
-  [deleteTodoSuccess]: (state, action) => ({
+  [deleteStudentSuccess]: (state, action) => ({
     ...state,
     isLoading: false,
     isSuccess: true,
@@ -73,7 +73,7 @@ export default handleActions({
     data: state.data.filter(n => n._id !== action.payload._id),
   }),
 
-  [updateTodoSuccess]: (state, action) => ({
+  [updateStudentSuccess]: (state, action) => ({
     ...state,
     isLoading: false,
     isSuccess: true,
@@ -81,7 +81,7 @@ export default handleActions({
     data: state.data.map(n => n._id === action.payload._id ? action.payload : n),
   }),
 
-  [patchTodoSuccess]: (state, action) => ({
+  [patchStudentSuccess]: (state, action) => ({
     ...state,
     isLoading: false,
     isSuccess: true,
@@ -89,7 +89,7 @@ export default handleActions({
     data: state.data.map(n => n._id === action.payload._id ? action.payload : n),
   }),
 
-  [getTodoSuccess]: (state, action) => ({
+  [getStudentSuccess]: (state, action) => ({
     ...state,
     isLoading: false,
     isSuccess: true,
@@ -105,7 +105,7 @@ export default handleActions({
     })(),
   }),
 
-  [getAllTodosSuccess]: (state, action) => ({
+  [getAllStudentsSuccess]: (state, action) => ({
     ...state,
     isLoading: false,
     isSuccess: true,

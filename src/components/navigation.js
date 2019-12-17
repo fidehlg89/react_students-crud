@@ -1,5 +1,16 @@
 import React from 'react';
 
+
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+} from 'reactstrap';
+
+
+
 class Navigation extends React.Component {
 
     constructor(props) {
@@ -8,21 +19,19 @@ class Navigation extends React.Component {
             props
         }
     }
+    
 
     render() {
         return (
-            <div className="navbar">
-                <div className="navbar-brand text-white" href="/">Estudiantes</div>
-                <div className="navbar-toggler" />
-                <div className="Collapse navbar">
-                    <nav className="mr-auto">
-                        <nav>
-                            <div className="nav-link text-white" href="/groups/" 
-                            onClick={this.handleClick}>Grupos</div>
-                        </nav>
-                    </nav>
-                </div>
-            </div>
+            <Navbar color="dark" light expand="md">
+                <NavbarBrand className="text-white" href="/">Estudiantes</NavbarBrand>
+                <NavbarToggler />
+                <Collapse navbar>
+                    <Nav className="mr-auto" navbar>
+                        {this.props.children}
+                    </Nav>
+                </Collapse>
+            </Navbar>
         )
 
 
