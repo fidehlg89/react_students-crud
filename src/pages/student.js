@@ -5,7 +5,6 @@ import Navigation from '../components/navigation'
 import Form from '../components/form'
 import "./style.css"
 import { students, cities } from "./../db/data.json"
-import Select from 'react-select';
 
 class StudentList extends React.Component {
 
@@ -18,22 +17,21 @@ class StudentList extends React.Component {
             isCreating: false,
             isUpdating: false,
             isViewing: false,
-            selectedOption: null,
+            selectedOption: 'Lugar de Nacimiento',
             options: []
         }
         this.onNewStudent = this.onNewStudent.bind(this);
         this.handleChangeSelect = this.handleChangeSelect.bind(this);
     }
 
-    onCreateStudent = () => {        
+    onCreateStudent = () => {
         let citieslist = cities.map(item =>
-            <option value={item.id}>{item.name}</option>          
-            )
+            <option value={item.name} key={item.id}>{item.name}</option>
+        )
 
         this.setState({
             options: citieslist
         })
-        console.log(this.state.options)
 
         this.setState({
             isCreating: !this.state.isCreating,
@@ -42,8 +40,8 @@ class StudentList extends React.Component {
 
     onNewStudent = () => {
         this.setState({
-            items: [
-                ...this.state.items,
+            students: [
+                ...this.state.students,
                 {
                     id: Date.now(),
                     name: this.refs.theTextNameInput.value,
@@ -59,16 +57,15 @@ class StudentList extends React.Component {
         })
     }
 
-    handleChangeSelect = selectedOption => {
+    handleChangeSelect = () => {
         this.setState(
-            { selectedOption },
-            () => console.log(`Option selected:`, this.state.selectedOption)
+            { selectedOption: this.refs.theTextLugNacInput.value }
         );
     };
 
     renderCreateview() {
         const { selectedOption, options } = this.state;
-        return <div className="student-item-create" align="center">
+        return <div className="student-item-create">
             <h5>Crear Estudiante</h5>
             <Form>
                 <input className="form-control" type="text" placeholder="Nombre" ref="theTextNameInput" />
@@ -78,7 +75,6 @@ class StudentList extends React.Component {
                 <input className="form-control" type="text" placeholder="Fecha de Nacimiento"
                     ref="theTextFecNacInput" />
                 <select className="form-control" value={selectedOption} ref="theTextLugNacInput" onChange={this.handleChangeSelect} >{options}</select>
-                {console.log(options)}
                 <input className="form-control" type="text" placeholder="Grupo"
                     ref="theTextGroupInput" />
                 <button
@@ -169,23 +165,23 @@ class StudentList extends React.Component {
     renderDefaultview = () => {
         const { students } = this.state;
         let itemslist = students.map(item =>
-            <tr className="" key={item.id}>
-                <th className="" hidden>
+            <tr key={item.id}>
+                <th hidden>
                     {item.id}
                 </th>
-                <th className="">
+                <th>
                     {item.name}
                 </th>
-                <th className="">
+                <th>
                     {item.edad}
                 </th>
-                <th className="" >
+                <th>
                     {item.sexo}
                 </th>
-                <th className="">
+                <th>
                     {item.email}
                 </th>
-                <th className="">
+                <th>
                     {item.fecha_nac}
                 </th>
                 <th className="">
@@ -228,7 +224,7 @@ class StudentList extends React.Component {
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody className="">{itemslist}</tbody>
+                                <tbody >{itemslist}</tbody>
                             </table></div>
                         ) : <p className="text-danger">No existen estudiantes, haga click en el botón Nuevo estudiante</p>}
                     </div>

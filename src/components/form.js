@@ -11,7 +11,7 @@ class Form extends React.Component {
 
     render() {
         return <form className="form-horizontal">            
-            <div className="form-group" align="center">
+            <div className="form-group">
                 {this.props.children}
             </div>
         </form>
