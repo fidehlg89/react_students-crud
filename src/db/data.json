@@ -1,0 +1,105 @@
+{
+    "students": [
+        {
+            "id": 1,
+            "name": "Pepe",
+            "email":"pepe@mail.com",
+            "edad":25,
+            "sexo":"M", 
+            "fecha_nac": "08/01/94",         
+            "groupId": 1,
+            "cityId": 2
+        },
+        {
+            "id": 2,
+            "name": "Juan",
+            "email":"juan@mail.com",
+            "edad":30,
+            "sexo":"M", 
+            "fecha_nac": "10/10/89", 
+            "groupId": 2,
+            "cityId": 4
+        },
+        {
+            "id": 3,
+            "name": "Peter",
+            "email":"peter@mail.com",
+            "edad":28,
+            "sexo":"M", 
+            "fecha_nac": "01/08/92",        
+            "groupId": 3,
+            "cityId": 3
+        },
+        {
+            "id": 4,
+            "name": "Pablo",
+            "email":"pablon@mail.com",
+            "edad":31,
+            "sexo":"M", 
+            "fecha_nac": "09/02/88",
+            "groupId": 2,
+            "cityId": 1
+        }
+    ],
+    "groups": [
+        {
+            "id": 1,
+            "name": "A-10",
+            "professorId": 1
+        },
+        {
+            "id": 2,
+            "name": "A-25",
+            "professorId": 2
+        },
+        {
+            "id": 3,
+            "name": "A-30",
+            "professorId": 3
+        },
+        {
+            "id": 4,
+            "name": "A-56",
+            "professorId": 4        }
+    ],
+    "cities": [
+        {
+            "id": 1,
+            "name": "Tokio"
+        },
+        {
+            "id": 2,
+            "name": "New York"
+        },
+        {
+            "id": 3,
+            "name": "Los Ángeles"
+        }, 
+        {
+            "id": 4,
+            "name": "Londres"
+        },
+        {
+            "id": 5,
+            "name": "China"
+        }
+    ],
+    "professors": [
+        {
+            "id": 1,
+            "name": "Julio"
+        },
+        {
+            "id": 2,
+            "name": "Pedro"
+        },
+        {
+            "id": 3,
+            "name": "Pablo"
+        },
+        {
+            "id": 4,
+            "name": "Jose"
+        }
+    ]
+}

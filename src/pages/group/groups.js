@@ -10,12 +10,12 @@ class GroupList extends React.Component {
 
     constructor(props) {
         super(props)
-        this.componentWillMount()
         this.state = {
             groups: [],
             professors: [],
             isCreating: false,
             isUpdating: false,
+            professorOption: '',
             groupProfesorId: 0
         }
         this.onNewGroup = this.onNewGroup.bind(this)
@@ -23,7 +23,7 @@ class GroupList extends React.Component {
 
     componentWillMount() {
         const groupsurl = `${API_URL}/groups`;
-        const professorsurl = `${API_URL}/professors`;       
+        const professorsurl = `${API_URL}/professors`;
 
         axios.get(groupsurl).then(response => response.data)
             .then((data) => {
@@ -37,7 +37,7 @@ class GroupList extends React.Component {
     }
 
     onCreateGroup = () => {
-        const {professors}=this.state
+        const { professors } = this.state
         let professorlist = professors.map(item =>
             <option value={item.id} key={item.id}>{item.name}</option>
         )
@@ -129,8 +129,8 @@ class GroupList extends React.Component {
     }
 
     //Eliminando Grupo
-    onDeleteGroup = (group) => {        
-        const {groups}=this.state
+    onDeleteGroup = (group) => {
+        const { groups } = this.state
         const index = groups.findIndex(n => n.id === group.id)
         if (index === -1) {
             return
@@ -142,7 +142,7 @@ class GroupList extends React.Component {
         })
     }
     //Vista Principal del CRUD Grupos
-    renderDefaultview = () => {        
+    renderDefaultview = () => {
         const { groups, professors } = this.state
         let groupProfesorId = 0
         let itemslist = groups.map(item =>
@@ -151,7 +151,8 @@ class GroupList extends React.Component {
                     {item.name}
                 </th>
                 <th>
-                    {console.log(professors)}
+                    <span hidden>{groupProfesorId = item.professorId-1 }</span>
+                    {groupProfesorId ===0 ? '' : professors[groupProfesorId].name}
                 </th>
                 <th className="">
                     <div>

@@ -1,55 +1,23 @@
-import React from "react"
+import React from "react";
+import { students, cities, groups, professors } from "./../../db/data"
 import { FaPen, FaTrash } from 'react-icons/fa'
 import Form from '../../components/form'
-import axios from 'axios';
-
-const API_URL = 'http://localhost:3001';
 
 class StudentList extends React.Component {
 
     constructor(props) {
-        super(props)        
+        super(props);
         this.state = {
-            students: [],
-            groups: [],
-            cities: [],
-            professors: [],
+            students: students,
+            professors: professors,
+            groups: groups,
+            cities: cities,
             isCreating: false,
             isUpdating: false,
         }
         this.onNewStudent = this.onNewStudent.bind(this)
     }
-
-    componentWillMount() {
-        const studentsurl = `${API_URL}/students`;
-        const groupsurl = `${API_URL}/groups`;
-        const citiesurl = `${API_URL}/cities`;
-        const professorsurl = `${API_URL}/professors`;
-
-        axios.get(studentsurl).then(response => response.data)
-            .then((data) => {
-                this.setState({ students: data })
-            })
-
-        axios.get(groupsurl).then(response => response.data)
-            .then((data) => {
-                this.setState({ groups: data })
-            })
-
-        axios.get(citiesurl).then(response => response.data)
-            .then((data) => {
-                this.setState({ cities: data })
-            })
-
-        axios.get(professorsurl).then(response => response.data)
-            .then((data) => {
-                this.setState({ professors: data })
-            })
-            
-    }
-
     onCreateStudent = () => {
-        const { cities, groups, professors } = this.state
         let citieslist = cities.map(item =>
             <option value={item.name} key={item.id}>{item.name}</option>
         )
@@ -78,12 +46,14 @@ class StudentList extends React.Component {
                 <input className="form-control" type="text" placeholder="Sexo" ref="theTextSexoInput" />
                 <input className="form-control" type="text" placeholder="Fecha de Nacimiento"
                     ref="theTextFecNacInput" />
+
                 <div className="form-control">
-                    <span>Seleccione ciudad de nacimiento: </span>
+                    <span>Ciudad: </span>
                     <select className="col-sm-4" value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} >{options}</select>
                 </div>
+
                 <div className="form-control">
-                    <span>Seleccione el grupo: </span>
+                    <span>Seleccione grupo: </span>
                     <select className="col-sm-4" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} >{groups}</select>
                 </div>
                 <button
@@ -96,7 +66,7 @@ class StudentList extends React.Component {
                         </button>
             </Form>
         </div>
-    }
+    };
     onNewStudent = () => {
         this.setState({
             students: [
@@ -104,24 +74,27 @@ class StudentList extends React.Component {
                 {
                     id: Date.now(),
                     name: this.refs.theTextNameInput.value,
+                    email: this.refs.theTextEmailInput.value,
                     edad: this.refs.theTextEdadInput.value,
                     sexo: this.refs.theTextSexoInput.value,
-                    email: this.refs.theTextEmailInput.value,
                     fecha_nac: this.refs.theTextFecNacInput.value,
-                    lugar_nac: this.refs.theTextLugNacInput.value,
-                    group: this.refs.theTextGroupInput.value,
+                    groupId: 2,
+                    cityId: 2,
                 },
             ],
             isCreating: false,
         })
+        console.log(this.refs.theTextGroupInput.value)
+        console.log(this.refs.theTextLugNacInput.value)
+
     }
 
     //Editando Estudiantes
     onUpdateStudent = (i) => {
-        const { students, cities, groups } = this.state
+        const { students } = this.state
         const index = students.findIndex(n => n.id === i)
         if (index === -1) {
-            return
+            return;
         }
         let citieslist = cities.map(item =>
             <option value={item.name} key={item.id}>{item.name}</option>
@@ -153,8 +126,8 @@ class StudentList extends React.Component {
     }
     renderUpdateview = (id) => {
         const student = this.state.students[id]
-        const { citiOption, groupOption, professorOption, options, groups, professors } = this.state
-        return <div className="student-item-create">
+        const { citiOption, groupOption, options, groups } = this.state
+        return <div className="student-item-create" align="center">
             <h5>Editar Estudiante</h5>
             <Form>
                 <input className="form-control" type="email" placeholder="Email" ref="theTextEmailInput" defaultValue={student.email} />
@@ -167,12 +140,16 @@ class StudentList extends React.Component {
                 <input className="form-control" type="text" placeholder="Fecha de Nacimiento" defaultValue={student.fecha_nac}
                     ref="theTextFecNacInput" />
 
-                <select className="form-control" value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} defaultValue={student.lugar_nac}>{options}</select>
-                <select className="" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} defaultValue={student.group}>{groups}</select>
-                <select className="" value={professorOption} ref="theTextProfessorInput" onChange={this.handleProfSelect}>{professors}</select>
+                <div className="form-control">
+                    <span>Ciudad: </span>
+                    <select value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} defaultValue={student.lugar_nac}>{options}</select>
+                </div>
 
+                <div className="form-control">
+                    <span>Seleccione grupo: </span>
+                    <select className="col-sm-4" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} >{groups}</select>
+                </div>
                 <button
-                    type="submit"
                     onClick={this.onEditStudent}
                     className="form-control btn btn-success btn-sm">Guardar
                 </button>
@@ -202,9 +179,7 @@ class StudentList extends React.Component {
         const { students } = this.state
         let itemslist = students.map(item =>
             <tr key={item.id}>
-                <th hidden>
-                    {item.id}
-                </th>
+
                 <th>
                     {item.name}
                 </th>
@@ -221,10 +196,10 @@ class StudentList extends React.Component {
                     {item.fecha_nac}
                 </th>
                 <th>
-                    {item.lugar_nac}
+                    {cities[(item.cityId - 1)].name}
                 </th>
                 <th>
-                    {item.group}
+                    {groups[(item.groupId - 1)].name}
                 </th>
                 <th>
                     <div>
@@ -249,7 +224,6 @@ class StudentList extends React.Component {
                             <table className="table table-striped table-hover table-bordered">
                                 <thead className="text-info">
                                     <tr>
-                                        <th hidden>#</th>
                                         <th>Nombre</th>
                                         <th>Edad</th>
                                         <th>Sexo</th>
@@ -276,7 +250,7 @@ class StudentList extends React.Component {
                 {this.state.isCreating ? this.renderCreateview() : ''}
                 {this.state.isUpdating ? this.renderUpdateview(this.state.id) : ''}
             </div>
-        )
+        );
     }
 }
 
