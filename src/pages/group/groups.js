@@ -9,9 +9,11 @@ class GroupList extends React.Component {
         super(props);
         this.state = {
             groups: groups,
+            professorlist: professors,
             professors: professors,
             isCreating: false,
             isUpdating: false,
+            groupProfesorId:0
         }
         this.onNewGroup = this.onNewGroup.bind(this);
     }
@@ -20,7 +22,7 @@ class GroupList extends React.Component {
             <option value={item.id} key={item.id}>{item.name}</option>
         )
 
-        this.setState({            
+        this.setState({
             professors: professorlist,
             isCreating: !this.state.isCreating,
         })
@@ -85,9 +87,8 @@ class GroupList extends React.Component {
 
         this.setState({
             isUpdating: !this.state.isUpdating,
-        })        
+        })
     }
-
     renderUpdateview = (id) => {
         const group = this.state.groups[id];
         const { proffesorOption, proffesors } = this.state;
@@ -108,8 +109,8 @@ class GroupList extends React.Component {
     }
 
     //Eliminando Grupo
-    onDeleteGroup = (groups) => {
-        const index = groups.findIndex(n => n.id === groups.id);
+    onDeleteGroup = (group) => {
+        const index = groups.findIndex(n => n.id === group.id);
         if (index === -1) {
             return;
         }
@@ -119,17 +120,18 @@ class GroupList extends React.Component {
             groups: newItems
         });
     }
-
     //Vista Principal del CRUD Grupos
     renderDefaultview = () => {
-        const { groups, professors } = this.state;
+        const { groups, professorlist } = this.state;
+        console.log(professorlist)
         let itemslist = groups.map(item =>
-            <tr key={item.id}>
+            <tr key={item.id} >
                 <th>
                     {item.name}
                 </th>
                 <th>
-                    {professors['professorId'].name}
+                    {this.state.groupProfesorId = item.professorId}
+                    {console.log(this.state.groupProfesorId)}
                 </th>
                 <th className="">
                     <div>

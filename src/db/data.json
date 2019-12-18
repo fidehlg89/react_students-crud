@@ -49,7 +49,7 @@
         {
             "id": 1,
             "name": "A-10",
-            "professorId": 2
+            "professorId": 1
         },
         {
             "id": 2,
@@ -64,8 +64,7 @@
         {
             "id": 4,
             "name": "A-56",
-            "professorId": 4
-        }
+            "professorId": 4        }
     ],
     "cities": [
         {
