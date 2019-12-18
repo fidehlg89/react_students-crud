@@ -1,21 +1,55 @@
-import React from "react";
-import { students, cities, groups, professors } from "./../../db/data"
+import React from "react"
 import { FaPen, FaTrash } from 'react-icons/fa'
 import Form from '../../components/form'
+import axios from 'axios';
+
+const API_URL = 'http://localhost:3001';
 
 class StudentList extends React.Component {
 
     constructor(props) {
-        super(props);
+        super(props)        
         this.state = {
-            students: students,
-            professors: professors,
+            students: [],
+            groups: [],
+            cities: [],
+            professors: [],
             isCreating: false,
             isUpdating: false,
         }
-        this.onNewStudent = this.onNewStudent.bind(this);
+        this.onNewStudent = this.onNewStudent.bind(this)
     }
+
+    componentWillMount() {
+        const studentsurl = `${API_URL}/students`;
+        const groupsurl = `${API_URL}/groups`;
+        const citiesurl = `${API_URL}/cities`;
+        const professorsurl = `${API_URL}/professors`;
+
+        axios.get(studentsurl).then(response => response.data)
+            .then((data) => {
+                this.setState({ students: data })
+            })
+
+        axios.get(groupsurl).then(response => response.data)
+            .then((data) => {
+                this.setState({ groups: data })
+            })
+
+        axios.get(citiesurl).then(response => response.data)
+            .then((data) => {
+                this.setState({ cities: data })
+            })
+
+        axios.get(professorsurl).then(response => response.data)
+            .then((data) => {
+                this.setState({ professors: data })
+            })
+            
+    }
+
     onCreateStudent = () => {
+        const { cities, groups, professors } = this.state
         let citieslist = cities.map(item =>
             <option value={item.name} key={item.id}>{item.name}</option>
         )
@@ -34,7 +68,7 @@ class StudentList extends React.Component {
         })
     }
     renderCreateview() {
-        const { citiOption, groupOption, options, groups } = this.state;
+        const { citiOption, groupOption, options, groups } = this.state
         return <div className="student-item-create">
             <h5>Crear Estudiante</h5>
             <Form>
@@ -44,12 +78,13 @@ class StudentList extends React.Component {
                 <input className="form-control" type="text" placeholder="Sexo" ref="theTextSexoInput" />
                 <input className="form-control" type="text" placeholder="Fecha de Nacimiento"
                     ref="theTextFecNacInput" />
-                <select className="form-control" value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} >{options}</select>
                 <div className="form-control">
-                    <span>Seleccione Grupo: </span>
+                    <span>Seleccione ciudad de nacimiento: </span>
+                    <select className="col-sm-4" value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} >{options}</select>
+                </div>
+                <div className="form-control">
+                    <span>Seleccione el grupo: </span>
                     <select className="col-sm-4" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} >{groups}</select>
-                    {/* <label>Seleccione un Profesor</label>
-                    <select className="col-sm-4" value={proffesorOption} ref="theTextProffesorInput" onChange={this.handleProfSelect}>{professors}</select> */}
                 </div>
                 <button
                     onClick={this.onNewStudent}
@@ -61,7 +96,7 @@ class StudentList extends React.Component {
                         </button>
             </Form>
         </div>
-    };
+    }
     onNewStudent = () => {
         this.setState({
             students: [
@@ -83,10 +118,10 @@ class StudentList extends React.Component {
 
     //Editando Estudiantes
     onUpdateStudent = (i) => {
-        const { students } = this.state;
-        const index = students.findIndex(n => n.id === i);
+        const { students, cities, groups } = this.state
+        const index = students.findIndex(n => n.id === i)
         if (index === -1) {
-            return;
+            return
         }
         let citieslist = cities.map(item =>
             <option value={item.name} key={item.id}>{item.name}</option>
@@ -117,9 +152,9 @@ class StudentList extends React.Component {
         })
     }
     renderUpdateview = (id) => {
-        const student = this.state.students[id];
-        const { citiOption, groupOption, proffesorOption, options, groups, proffesors } = this.state;
-        return <div className="student-item-create" align="center">
+        const student = this.state.students[id]
+        const { citiOption, groupOption, professorOption, options, groups, professors } = this.state
+        return <div className="student-item-create">
             <h5>Editar Estudiante</h5>
             <Form>
                 <input className="form-control" type="email" placeholder="Email" ref="theTextEmailInput" defaultValue={student.email} />
@@ -134,9 +169,10 @@ class StudentList extends React.Component {
 
                 <select className="form-control" value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} defaultValue={student.lugar_nac}>{options}</select>
                 <select className="" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} defaultValue={student.group}>{groups}</select>
-                <select className="" value={proffesorOption} ref="theTextProffesorInput" onChange={this.handleProfSelect}>{proffesors}</select>
+                <select className="" value={professorOption} ref="theTextProfessorInput" onChange={this.handleProfSelect}>{professors}</select>
 
                 <button
+                    type="submit"
                     onClick={this.onEditStudent}
                     className="form-control btn btn-success btn-sm">Guardar
                 </button>
@@ -149,21 +185,21 @@ class StudentList extends React.Component {
 
     //Eliminando Estudiante
     onDeleteStudent = (student) => {
-        const { students } = this.state;
-        const index = students.findIndex(n => n.id === student.id);
+        const { students } = this.state
+        const index = students.findIndex(n => n.id === student.id)
         if (index === -1) {
-            return;
+            return
         }
-        const newItems = students.slice();
-        newItems.splice(index, 1);
+        const newItems = students.slice()
+        newItems.splice(index, 1)
         this.setState({
             students: newItems
-        });
+        })
     }
 
     //Vista Principal del CRUD Estudiante
     renderDefaultview = () => {
-        const { students } = this.state;
+        const { students } = this.state
         let itemslist = students.map(item =>
             <tr key={item.id}>
                 <th hidden>
@@ -210,7 +246,7 @@ class StudentList extends React.Component {
                         </button>
                     <div className="panel-body">
                         {(itemslist.length > 0) ? (<div>
-                            <table className="table table-striped table-hover">
+                            <table className="table table-striped table-hover table-bordered">
                                 <thead className="text-info">
                                     <tr>
                                         <th hidden>#</th>
@@ -221,7 +257,7 @@ class StudentList extends React.Component {
                                         <th>Fecha de Nacimiento</th>
                                         <th>Lugar de Nacimiento</th>
                                         <th>Grupo</th>
-                                        <th></th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody >{itemslist}</tbody>
@@ -235,12 +271,12 @@ class StudentList extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 {this.state.isCreating || this.state.isUpdating ? '' : this.renderDefaultview()}
                 {this.state.isCreating ? this.renderCreateview() : ''}
                 {this.state.isUpdating ? this.renderUpdateview(this.state.id) : ''}
             </div>
-        );
+        )
     }
 }
 

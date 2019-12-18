@@ -25,18 +25,18 @@ export default {
     }),
 
     patch: (id, data) => axiosBase({
-      url: `/todos/${id}`,
+      url: `/students/${id}`,
       method: 'patch',
       data,
     }),
 
     get: (id) => axiosBase({
-      url: `/todos/${id}`,
+      url: `/students/${id}`,
       method: 'get',
     }),
 
     getAll: () => axiosBase({
-      url: '/todos',
+      url: '/students',
       method: 'get',
     }),
   },

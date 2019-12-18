@@ -2,7 +2,7 @@ import React from 'react';
 
 function Layout(props) {
   return (    
-      <div className="wrap" align="center">
+      <div className="wrap main-page">
         {
           props.children
         }

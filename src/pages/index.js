@@ -1,11 +1,5 @@
 import React from "react";
-import Layout from "../components/layout"
-import Navigation from '../components/navigation'
 import "./style.css"
-import {
-    NavItem,
-    NavLink
-} from 'reactstrap'
 
 class MainContainer extends React.Component {
 
@@ -14,38 +8,22 @@ class MainContainer extends React.Component {
         this.state = {
             props
         }
-        this.onNewGroup = this.onNewGroup.bind(this);
-        this.handleCitiSelect = this.handleCitiSelect.bind(this);
-        this.handleGroupSelect = this.handleGroupSelect.bind(this);
-        this.handleProfSelect = this.handleProfSelect.bind(this);
     }
 
-    handleCitiSelect = () => {
-        this.setState(
-            {
-                citiOption: this.refs.theTextLugNacInput.value
-            }
+    renderMainPage() {
+        return (
+            <div className="jumbotron" align="center" hidden={this.state.isHidden}>
+                <h1>Bienvenidos!</h1>
+                <p className="lead">Sistema de Gestión de Estudiantes</p>
+                <p><a className="btn btn-lg btn-secondary" href="/estudiantes"> Administrar estudiantes</a></p>
+            </div>
         );
-    };
-    handleGroupSelect = () => {
-        this.setState(
-            { groupOption: this.refs.theTextGroupInput.value }
-        );
-    };
-    handleProfSelect = () => {
-        this.setState(
-            { proffesorOption: this.refs.theTextProffesorInput.value }
-        );
-    };   
+    }
 
     render() {
         return (
-            <div>
-                <Navigation>
-                    <NavItem>
-                        <NavLink className="text-white" href="/groups/">Grupos</NavLink>
-                    </NavItem></Navigation>
-                <Layout/>
+            <div className="site-index">
+                {this.renderMainPage()}
             </div>
         )
     }

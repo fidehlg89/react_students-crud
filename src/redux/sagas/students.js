@@ -1,28 +1,11 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 import {
   getAllStudents,
-  getAllStudentsFailure,
-  getAllStudentsSuccess,
-
   updateStudent,
-  updateStudentFailure,
-  updateStudentsuccess,
-
   patchStudent,
-  patchStudentFailure,
-  patchStudentsuccess,
-
   createStudent,
-  createStudentFailure,
-  createStudentsuccess,
-
   getStudent,
-  getStudentFailure,
-  getStudentsuccess,
-
   deleteStudent,
-  deleteStudentFailure,
-  deleteStudentsuccess,
 } from '../actions/Students';
 import api from '../../services/api';
 

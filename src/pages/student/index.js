@@ -1,12 +1,12 @@
 import React from "react";
 import StudentList from "./students";
 
-class StudentPage extends React.Component{
+class StudentPage extends React.Component {
 
-    render(){
-        return(
-            <StudentList/>
-        );
+    render() {
+        return (
+            <StudentList />
+        )
     }
 }
 

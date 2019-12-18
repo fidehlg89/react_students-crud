@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import {
     Collapse,
     Navbar,
@@ -8,8 +7,7 @@ import {
     NavbarBrand,
     Nav,
 } from 'reactstrap';
-
-
+import { FaHome } from 'react-icons/fa';
 
 class Navigation extends React.Component {
 
@@ -18,13 +16,12 @@ class Navigation extends React.Component {
         this.state = {
             props
         }
-    }
-    
+    }   
 
     render() {
         return (
-            <Navbar color="dark" light expand="md">
-                <NavbarBrand className="text-white" href="/students">Estudiantes</NavbarBrand>
+            <Navbar color="dark" light expand="md" fixed="top">
+                <NavbarBrand className="text-white" href="/"><FaHome/></NavbarBrand>
                 <NavbarToggler />
                 <Collapse navbar>
                     <Nav className="mr-auto" navbar>
