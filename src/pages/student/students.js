@@ -19,19 +19,15 @@ class StudentList extends React.Component {
     }
     onCreateStudent = () => {
         let citieslist = cities.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>{item.name}</option>
         )
         let grouplist = groups.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
-        )
-        let professorslist = professors.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>{item.name}</option>
         )
 
         this.setState({
             options: citieslist,
             groups: grouplist,
-            professors: professorslist,
             isCreating: !this.state.isCreating,
         })
     }
@@ -49,21 +45,31 @@ class StudentList extends React.Component {
 
                 <div className="form-control">
                     <span>Ciudad: </span>
-                    <select className="col-sm-4" value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} >{options}</select>
+                    <select className="col-sm-4"
+                        value={citiOption}
+                        ref="theTextLugNacInput"
+                        onChange={this.handleCitiSelect} >
+                        {options}</select>
                 </div>
-
                 <div className="form-control">
                     <span>Seleccione grupo: </span>
-                    <select className="col-sm-4" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} >{groups}</select>
+                    <select className="col-sm-4"
+                        value={groupOption}
+                        ref="theTextGroupInput"
+                        onChange={this.handleGroupSelect} >
+                        {groups}
+                    </select>
                 </div>
                 <button
                     onClick={this.onNewStudent}
-                    className="form-control btn btn-success btn-sm">Guardar
-                        </button>
+                    className="form-control btn btn-success btn-sm">
+                    Guardar
+                </button>
                 <button
                     onClick={this.isCreating}
-                    className="form-control btn btn-danger btn-sm"> Cancelar
-                        </button>
+                    className="form-control btn btn-danger btn-sm">
+                    Cancelar
+                </button>
             </Form>
         </div>
     };
@@ -78,15 +84,12 @@ class StudentList extends React.Component {
                     edad: this.refs.theTextEdadInput.value,
                     sexo: this.refs.theTextSexoInput.value,
                     fecha_nac: this.refs.theTextFecNacInput.value,
-                    groupId: 2,
-                    cityId: 2,
+                    groupId: this.refs.theTextLugNacInput.value,
+                    cityId: this.refs.theTextGroupInput.value,
                 },
             ],
             isCreating: false,
         })
-        console.log(this.refs.theTextGroupInput.value)
-        console.log(this.refs.theTextLugNacInput.value)
-
     }
 
     //Editando Estudiantes
@@ -97,10 +100,10 @@ class StudentList extends React.Component {
             return;
         }
         let citieslist = cities.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id} >{item.name}</option>
         )
         let grouplist = groups.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>{item.name}</option>
         )
         this.setState({
             options: citieslist,
@@ -123,31 +126,53 @@ class StudentList extends React.Component {
         this.setState({
             isUpdating: !this.state.isUpdating,
         })
+
+        console.log(this.refs.theTextLugNacInput.value)
+        console.log(this.refs.theTextGroupInput.value)
     }
     renderUpdateview = (id) => {
         const student = this.state.students[id]
+        console.log(student)
         const { citiOption, groupOption, options, groups } = this.state
         return <div className="student-item-create" align="center">
             <h5>Editar Estudiante</h5>
             <Form>
-                <input className="form-control" type="email" placeholder="Email" ref="theTextEmailInput" defaultValue={student.email} />
-                <input className="form-control" hidden type="number" ref="theTextIDInput"
-                    defaultValue={id} key={id} />
-                <input className="form-control" type="text" placeholder="Nombre" ref="theTextNameInput"
+                <input className="form-control"
+                    type="email"
+                    placeholder="Email"
+                    ref="theTextEmailInput"
+                    defaultValue={student.email} />
+                <input className="form-control"
+                    type="text"
+                    placeholder="Nombre" ref="theTextNameInput"
                     defaultValue={student.name} />
-                <input className="form-control" type="number" placeholder="Edad" ref="theTextEdadInput" defaultValue={student.edad} />
-                <input className="form-control" type="text" placeholder="Sexo" ref="theTextSexoInput" defaultValue={student.sexo} />
+                <input className="form-control"
+                    type="number"
+                    placeholder="Edad" ref="theTextEdadInput"
+                    defaultValue={student.edad} />
+                <input className="form-control" type="text"
+                    placeholder="Sexo" ref="theTextSexoInput"
+                    defaultValue={student.sexo} />
                 <input className="form-control" type="text" placeholder="Fecha de Nacimiento" defaultValue={student.fecha_nac}
                     ref="theTextFecNacInput" />
-
+                    
                 <div className="form-control">
                     <span>Ciudad: </span>
-                    <select value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} defaultValue={student.lugar_nac}>{options}</select>
+                    <select value={citiOption} ref="theTextLugNacInput"
+                        onChange={this.handleCitiSelect}
+                        defaultValue={student.lugar_nac}>
+                        {options}
+                    </select>
                 </div>
 
                 <div className="form-control">
                     <span>Seleccione grupo: </span>
-                    <select className="col-sm-4" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} >{groups}</select>
+                    <select className="col-sm-4"
+                        value={groupOption}
+                        ref="theTextGroupInput"
+                        onChange={this.handleGroupSelect}>
+                        {groups}
+                    </select>
                 </div>
                 <button
                     onClick={this.onEditStudent}
@@ -159,7 +184,6 @@ class StudentList extends React.Component {
             </Form>
         </div>
     }
-
     //Eliminando Estudiante
     onDeleteStudent = (student) => {
         const { students } = this.state
@@ -179,7 +203,6 @@ class StudentList extends React.Component {
         const { students } = this.state
         let itemslist = students.map(item =>
             <tr key={item.id}>
-
                 <th>
                     {item.name}
                 </th>
