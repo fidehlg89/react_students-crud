@@ -14,9 +14,27 @@ class StudentList extends React.Component {
             cities: cities,
             isCreating: false,
             isUpdating: false,
+            cityOption: '',
+            groupOption: ''
         }
         this.onNewStudent = this.onNewStudent.bind(this)
+        this.handleCitySelect = this.handleCitySelect.bind(this);
+        this.handleGroupSelect = this.handleGroupSelect.bind(this);
     }
+
+    handleCitySelect = () => {
+        this.setState(
+            {
+                cityOption: this.refs.theTextLugNacInput.value
+            }
+        );
+    };
+    handleGroupSelect = () => {
+        this.setState(
+            { groupOption: this.refs.theTextGroupInput.value }
+        );
+    };
+
     onCreateStudent = () => {
         let citieslist = cities.map(item =>
             <option value={item.id} key={item.id}>{item.name}</option>
@@ -32,7 +50,7 @@ class StudentList extends React.Component {
         })
     }
     renderCreateview() {
-        const { citiOption, groupOption, options, groups } = this.state
+        const { cityOption, groupOption, options, groups } = this.state
         return <div className="student-item-create">
             <h5>Crear Estudiante</h5>
             <Form>
@@ -46,9 +64,9 @@ class StudentList extends React.Component {
                 <div className="form-control">
                     <span>Ciudad: </span>
                     <select className="col-sm-4"
-                        value={citiOption}
+                        value={cityOption}
                         ref="theTextLugNacInput"
-                        onChange={this.handleCitiSelect} >
+                        onChange={this.handleCitySelect} >
                         {options}</select>
                 </div>
                 <div className="form-control">
@@ -120,21 +138,17 @@ class StudentList extends React.Component {
         student.edad = this.refs.theTextEdadInput.value
         student.sexo = this.refs.theTextSexoInput.value
         student.fecha_nac = this.refs.theTextFecNacInput.value
-        student.lugar_nac = this.refs.theTextLugNacInput.value
-        student.group = this.refs.theTextGroupInput.value
+        student.cityId = this.refs.theTextLugNacInput.value
+        student.groupId = this.refs.theTextGroupInput.value
 
         this.setState({
             isUpdating: !this.state.isUpdating,
         })
-
-        console.log(this.refs.theTextLugNacInput.value)
-        console.log(this.refs.theTextGroupInput.value)
     }
     renderUpdateview = (id) => {
         const student = this.state.students[id]
-        console.log(student)
-        const { citiOption, groupOption, options, groups } = this.state
-        return <div className="student-item-create" align="center">
+        const { cityOption, groupOption, options, groups } = this.state
+        return <div className="student-item-create">
             <h5>Editar Estudiante</h5>
             <Form>
                 <input className="form-control"
@@ -155,12 +169,13 @@ class StudentList extends React.Component {
                     defaultValue={student.sexo} />
                 <input className="form-control" type="text" placeholder="Fecha de Nacimiento" defaultValue={student.fecha_nac}
                     ref="theTextFecNacInput" />
-                    
+
                 <div className="form-control">
                     <span>Ciudad: </span>
-                    <select value={citiOption} ref="theTextLugNacInput"
-                        onChange={this.handleCitiSelect}
-                        defaultValue={student.lugar_nac}>
+                    <select
+                        value={cityOption}
+                        ref="theTextLugNacInput"
+                        onChange={this.handleCitySelect}>
                         {options}
                     </select>
                 </div>
@@ -176,10 +191,12 @@ class StudentList extends React.Component {
                 </div>
                 <button
                     onClick={this.onEditStudent}
-                    className="form-control btn btn-success btn-sm">Guardar
+                    className="form-control btn btn-success btn-sm">
+                    Guardar
                 </button>
                 <button
-                    className="form-control btn btn-danger btn-sm"> Cancelar
+                    className="form-control btn btn-danger btn-sm">
+                    Cancelar
                 </button>
             </Form>
         </div>
