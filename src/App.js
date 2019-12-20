@@ -8,7 +8,7 @@ import MainContainer from "./pages"
 class App extends React.Component {
     render() {
         return (
-            <StudentPage />
+            <GroupPage/>
             //  <BrowserRouter>
             //     <Switch>
             //         <Route exact path="/" component={MainContainer} />

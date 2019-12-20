@@ -2,38 +2,21 @@ import React from "react"
 import { FaPen, FaTrash } from 'react-icons/fa'
 import Form from '../../components/form'
 import Table from '../../components/table'
-import axios from 'axios'
-
-const API_URL = 'http://localhost:3001';
+import { groups, professors } from "./../../db/data"
 
 class GroupList extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            groups: [],
-            professors: [],
+            groups: groups,
+            professors: professors,
             isCreating: false,
             isUpdating: false,
             professorOption: '',
             groupProfesorId: 0
         }
         this.onNewGroup = this.onNewGroup.bind(this)
-    }
-
-    componentWillMount() {
-        const groupsurl = `${API_URL}/groups`;
-        const professorsurl = `${API_URL}/professors`;
-
-        axios.get(groupsurl).then(response => response.data)
-            .then((data) => {
-                this.setState({ groups: data })
-            })
-
-        axios.get(professorsurl).then(response => response.data)
-            .then((data) => {
-                this.setState({ professors: data })
-            })
     }
 
     onCreateGroup = () => {
@@ -90,7 +73,7 @@ class GroupList extends React.Component {
             return
         }
         let grouplist = groups.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>{item.name}</option>
         )
         this.setState({
             groups: grouplist,
@@ -103,31 +86,51 @@ class GroupList extends React.Component {
         let group = this.state.groups[id]
 
         group.name = this.refs.theTextNameInput.value
-        group.professorId = this.refs.theTextGroupInput.key
+        group.professorId = this.refs.theTextProfessorInput.value
 
         this.setState({
             isUpdating: !this.state.isUpdating,
         })
     }
+    handleProfSelect = (e) => {
+        this.setState(
+            {
+                professorOption: e.target.value
+            }
+        )
+    }
+
+    //Formulario de Edición
     renderUpdateview = (id) => {
-        const group = this.state.groups[id]
-        const { professorOption, professors } = this.state
+        const { professorOption, professors, groups } = this.state        
+        const group = groups[id]
         return <div className="group-item-create">
             <h5>Editar Grupo</h5>
             <Form>
-                <input className="form-control" type="email" placeholder="Name" ref="theTextEmailInput" defaultValue={group.email} />
-                <select className="" value={professorOption} onChange={this.handleProfSelect} ref="theTextProfessorInput">{professors}</select>
+                <input className="form-control"
+                    type="text"
+                    placeholder="Name"
+                    ref="theTextNameInput"
+                    defaultValue={group.name}
+                />
+                <select
+                    value={professorOption}
+                    ref="theTextProfessorInput"
+                    onChange={this.handleProfSelect}>
+                    {professors}
+                </select>
                 <button
                     onClick={this.onEditGroup}
-                    className="form-control btn btn-success btn-sm">Guardar
+                    className="form-control btn btn-success btn-sm">
+                    Guardar
                 </button>
                 <button
-                    className="form-control btn btn-danger btn-sm"> Cancelar
+                    className="form-control btn btn-danger btn-sm">
+                    Cancelar
                 </button>
             </Form>
         </div>
     }
-
     //Eliminando Grupo
     onDeleteGroup = (group) => {
         const { groups } = this.state
@@ -151,12 +154,13 @@ class GroupList extends React.Component {
                     {item.name}
                 </th>
                 <th>
-                    <span hidden>{groupProfesorId = item.professorId-1 }</span>
-                    {groupProfesorId ===0 ? '' : professors[groupProfesorId].name}
+                    <span hidden>{groupProfesorId = item.professorId - 1}</span>
+                    {professors[groupProfesorId].name}
                 </th>
                 <th className="">
                     <div>
-                        <button type="submit" className="btn btn-default btn-sm btn-success" onClick={() => this.onUpdateGroup(item.id)}><FaPen />
+                        <button type="submit" className="btn btn-default btn-sm btn-success"
+                            onClick={() => this.onUpdateGroup(item.id)}><FaPen />
                         </button>
                         <span> </span>
                         <button className="btn btn-default btn-sm btn-danger" onClick={() => this.onDeleteGroup(item)}><FaTrash />

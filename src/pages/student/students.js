@@ -9,32 +9,40 @@ class StudentList extends React.Component {
         super(props);
         this.state = {
             students: students,
+            student: [],
             professors: professors,
             groups: groups,
             cities: cities,
-            isCreating: false,
-            isUpdating: false,
             cityOption: '',
-            groupOption: ''
+            groupOption: '',
+            cityId: 0,
+            groupId: 0,
+            isCreating: false,
+            isUpdating: false
         }
         this.onNewStudent = this.onNewStudent.bind(this)
+        this.onUpdateStudent = this.onUpdateStudent.bind(this)
         this.handleCitySelect = this.handleCitySelect.bind(this);
         this.handleGroupSelect = this.handleGroupSelect.bind(this);
     }
 
-    handleCitySelect = () => {
+    handleCitySelect = (e) => {
+        const cityId = e.target.value
+
         this.setState(
             {
-                cityOption: this.refs.theTextLugNacInput.value
+                cityOption: cityId
             }
-        );
-    };
-    handleGroupSelect = () => {
+        )
+    }
+    handleGroupSelect = (e) => {
+        const groupId = e.target.value
         this.setState(
-            { groupOption: this.refs.theTextGroupInput.value }
-        );
-    };
-
+            {
+                groupOption: groupId
+            }
+        )
+    }
     onCreateStudent = () => {
         let citieslist = cities.map(item =>
             <option value={item.id} key={item.id}>{item.name}</option>
@@ -44,13 +52,13 @@ class StudentList extends React.Component {
         )
 
         this.setState({
-            options: citieslist,
+            cities: citieslist,
             groups: grouplist,
             isCreating: !this.state.isCreating,
         })
     }
     renderCreateview() {
-        const { cityOption, groupOption, options, groups } = this.state
+        const { cityOption, groupOption, cities, groups } = this.state
         return <div className="student-item-create">
             <h5>Crear Estudiante</h5>
             <Form>
@@ -67,7 +75,7 @@ class StudentList extends React.Component {
                         value={cityOption}
                         ref="theTextLugNacInput"
                         onChange={this.handleCitySelect} >
-                        {options}</select>
+                        {cities}</select>
                 </div>
                 <div className="form-control">
                     <span>Seleccione grupo: </span>
@@ -90,7 +98,7 @@ class StudentList extends React.Component {
                 </button>
             </Form>
         </div>
-    };
+    }
     onNewStudent = () => {
         this.setState({
             students: [
@@ -109,7 +117,6 @@ class StudentList extends React.Component {
             isCreating: false,
         })
     }
-
     //Editando Estudiantes
     onUpdateStudent = (i) => {
         const { students } = this.state
@@ -118,14 +125,20 @@ class StudentList extends React.Component {
             return;
         }
         let citieslist = cities.map(item =>
-            <option value={item.id} key={item.id} >{item.name}</option>
+            <option value={item.id} key={item.id} >
+                {item.name}
+            </option>
         )
         let grouplist = groups.map(item =>
-            <option value={item.id} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>
+                {item.name}
+            </option>
         )
         this.setState({
-            options: citieslist,
+            cityOption: (index + 1),
+            cities: citieslist,
             groups: grouplist,
+            student: students[index],
             isUpdating: !this.state.isUpdating,
             id: index,
         })
@@ -147,7 +160,8 @@ class StudentList extends React.Component {
     }
     renderUpdateview = (id) => {
         const student = this.state.students[id]
-        const { cityOption, groupOption, options, groups } = this.state
+        const { cityOption, groupOption, cities, groups } = this.state
+
         return <div className="student-item-create">
             <h5>Editar Estudiante</h5>
             <Form>
@@ -176,7 +190,7 @@ class StudentList extends React.Component {
                         value={cityOption}
                         ref="theTextLugNacInput"
                         onChange={this.handleCitySelect}>
-                        {options}
+                        {cities}
                     </select>
                 </div>
 
@@ -214,7 +228,6 @@ class StudentList extends React.Component {
             students: newItems
         })
     }
-
     //Vista Principal del CRUD Estudiante
     renderDefaultview = () => {
         const { students } = this.state
@@ -282,7 +295,6 @@ class StudentList extends React.Component {
             }
         </div>
     }
-
     render() {
         return (
             <div className="container">
