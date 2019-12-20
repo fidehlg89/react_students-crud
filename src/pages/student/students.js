@@ -3,6 +3,11 @@ import { students, cities, groups, professors } from "./../../db/data"
 import { FaPen, FaTrash } from 'react-icons/fa'
 import Form from '../../components/form'
 
+//Importando modulo para trabajar con fechas
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import StudentView from "./view";
+
 class StudentList extends React.Component {
 
     constructor(props) {
@@ -18,6 +23,11 @@ class StudentList extends React.Component {
         }
         this.onNewStudent = this.onNewStudent.bind(this)
     }
+    handleDateChange = date => {
+        this.setState({
+            startDate: date
+        });
+    };
 
     onCreateStudent = () => {
         let citieslist = cities.map(item =>
@@ -29,7 +39,6 @@ class StudentList extends React.Component {
         let professorslist = professors.map(item =>
             <option value={item.id} key={item.id}>{item.name}</option>
         )
-
         this.setState({
             cities: citieslist,
             groups: grouplist,
@@ -42,34 +51,43 @@ class StudentList extends React.Component {
         return <div className="student-item-create">
             <h5>Crear Estudiante</h5>
             <Form>
-                <input className="form-control" type="text" placeholder="Nombre" ref="theTextNameInput" />
-                <input className="form-control" type="email" placeholder="Email" ref="theTextEmailInput" />
-                <input className="form-control" type="number" placeholder="Edad" ref="theTextEdadInput" />
-                <input className="form-control" type="text" placeholder="Sexo" ref="theTextSexoInput" />
-                <input className="form-control" type="text" placeholder="Fecha de Nacimiento"
-                    ref="theTextFecNacInput" />
-
-                <div className="form-control">
+                <input type="text" placeholder="Nombre" ref="theTextNameInput" />
+                <input type="email" placeholder="Email" ref="theTextEmailInput" />
+                <input type="number" placeholder="Edad" ref="theTextEdadInput" />
+                <input type="text" placeholder="Sexo" ref="theTextSexoInput" />
+                <div>
+                    <span>Seleccione fecha de Nacimiento: </span>
+                    <DatePicker
+                        selected={this.state.startDate}
+                        onChange={this.handleDateChange}
+                        dateFormat="dd/MM/yyyy"
+                    />
+                </div>
+                <div>
                     <span>Ciudad: </span>
                     <select className="col-sm-4" value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} >{cities}</select>
                 </div>
 
-                <div className="form-control">
+                <div>
                     <span>Seleccione grupo: </span>
                     <select className="col-sm-4" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} >{groups}</select>
                 </div>
-                <button
-                    onClick={this.onNewStudent}
-                    className="form-control btn btn-success btn-sm">Guardar
+                <div className="buttons-action">
+                    <button
+                        onClick={this.onNewStudent}
+                        className="btn btn-success btn-sm">Guardar
                         </button>
-                <button
-                    onClick={this.isCreating}
-                    className="form-control btn btn-danger btn-sm"> Cancelar
-                        </button>
+                    <button
+                        onClick={this.isCreating}
+                        className="btn btn-danger btn-sm"> Cancelar
+                    </button>
+                </div>
             </Form>
         </div>
     };
     onNewStudent = () => {
+        let fechaNac = this.state.startDate;
+        let fecha=(fechaNac.getUTCDate()+'/'+(fechaNac.getMonth()+1)+'/'+fechaNac.getFullYear())
         this.setState({
             students: [
                 ...this.state.students,
@@ -79,7 +97,7 @@ class StudentList extends React.Component {
                     email: this.refs.theTextEmailInput.value,
                     edad: this.refs.theTextEdadInput.value,
                     sexo: this.refs.theTextSexoInput.value,
-                    fecha_nac: this.refs.theTextFecNacInput.value,
+                    fecha_nac: fecha,
                     groupId: this.refs.theTextGroupInput.value,
                     cityId: this.refs.theTextLugNacInput.value,
                 },
@@ -97,10 +115,10 @@ class StudentList extends React.Component {
             return;
         }
         let citieslist = cities.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>{item.name}</option>
         )
         let grouplist = groups.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>{item.name}</option>
         )
         this.setState({
             cities: citieslist,
@@ -110,17 +128,21 @@ class StudentList extends React.Component {
         })
     }
     onEditStudent = () => {
+        let fechaNac = this.state.startDate;
+        let fecha=(fechaNac.getUTCDate()+'/'+(fechaNac.getMonth()+1)+'/'+fechaNac.getFullYear())
         const id = this.state.id
         let student = this.state.students[id]
         student.name = this.refs.theTextNameInput.value
         student.email = this.refs.theTextEmailInput.value
         student.edad = this.refs.theTextEdadInput.value
         student.sexo = this.refs.theTextSexoInput.value
-        student.fecha_nac = this.refs.theTextFecNacInput.value
-        student.lugar_nac = this.refs.theTextLugNacInput.value
-        student.group = this.refs.theTextGroupInput.value
+        student.fecha_nac = fecha
+        student.cityId = this.refs.theTextLugNacInput.value
+        student.groupId = this.refs.theTextGroupInput.value
 
         this.setState({
+            student:students,
+            cities:cities,
             isUpdating: !this.state.isUpdating,
         })
     }
@@ -153,11 +175,10 @@ class StudentList extends React.Component {
                     placeholder="Sexo"
                     ref="theTextSexoInput"
                     defaultValue={student.sexo} />
-                <input className="form-control"
-                    type="text"
-                    placeholder="Fecha de Nacimiento"
-                    defaultValue={student.fecha_nac}
-                    ref="theTextFecNacInput" />
+                <DatePicker
+                    selected={this.state.startDate}
+                    onChange={this.handleDateChange}
+                />
 
                 <div className="form-control">
                     <span>Ciudad: </span>
@@ -264,14 +285,15 @@ class StudentList extends React.Component {
             }
         </div>
     }
-
     render() {
         return (
             <div className="container">
                 {this.state.isCreating || this.state.isUpdating ? '' : this.renderDefaultview()}
                 {this.state.isCreating ? this.renderCreateview() : ''}
                 {this.state.isUpdating ? this.renderUpdateview(this.state.id) : ''}
+                <StudentView/>
             </div>
+            
         );
     }
 }
