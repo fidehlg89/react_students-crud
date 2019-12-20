@@ -182,7 +182,6 @@ class StudentList extends React.Component {
             </Form>
         </div>
     }
-
     //Eliminando Estudiante
     onDeleteStudent = (student) => {
         const { students } = this.state
@@ -196,7 +195,6 @@ class StudentList extends React.Component {
             students: newItems
         })
     }
-
     //Vista Principal del CRUD Estudiante
     renderDefaultview = () => {
         const { students } = this.state

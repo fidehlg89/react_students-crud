@@ -63,7 +63,6 @@ class GroupList extends React.Component {
             ],
             isCreating: false,
         })
-        console.log(this.state.groups)
     }
     //Editando Grupos
     onUpdateGroup = (i) => {
@@ -73,7 +72,7 @@ class GroupList extends React.Component {
             return
         }
         let professorlist = professors.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>{item.name}</option>
         )
         this.setState({
             professors: professorlist,
@@ -86,9 +85,10 @@ class GroupList extends React.Component {
         let group = this.state.groups[id]
 
         group.name = this.refs.theTextNameInput.value
-        group.professorId = 1
+        group.professorId = this.refs.theTextProfessorInput.value
 
         this.setState({
+            professors: professors,
             isUpdating: !this.state.isUpdating,
         })
     }
@@ -150,16 +150,10 @@ class GroupList extends React.Component {
     //Vista Principal del CRUD Grupos
     renderDefaultview = () => {
         const { groups, professors } = this.state
-        let groupProfesorId = 0
         let itemslist = groups.map(item =>
-            <tr key={item.id} >
-                <th>
-                    {item.name}
-                </th>
-                <th>
-                    <span hidden>{groupProfesorId = item.professorId - 1}</span>
-                    {professors[groupProfesorId].name}
-                </th>
+            <tr key={item.id}>
+                <th>{item.name}</th>
+                <th>{professors[item.professorId-1].name}</th>
                 <th className="">
                     <div>
                         <button type="submit" className="btn btn-default btn-sm btn-success"
