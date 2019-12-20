@@ -11,7 +11,7 @@ class GroupList extends React.Component {
         this.state = {
             groups: groups,
             professors: professors,
-            students:students,
+            students: students,
             isCreating: false,
             isUpdating: false,
             professorOption: '',
@@ -25,7 +25,6 @@ class GroupList extends React.Component {
         let professorlist = professors.map(item =>
             <option value={item.id} key={item.id}>{item.name}</option>
         )
-
         this.setState({
             professors: professorlist,
             isCreating: !this.state.isCreating,
@@ -73,11 +72,11 @@ class GroupList extends React.Component {
         if (index === -1) {
             return
         }
-        let grouplist = groups.map(item =>
-            <option value={item.id} key={item.id}>{item.name}</option>
+        let professorlist = professors.map(item =>
+            <option value={item.name} key={item.id}>{item.name}</option>
         )
         this.setState({
-            groups: grouplist,
+            professors: professorlist,
             isUpdating: !this.state.isUpdating,
             id: index,
         })
@@ -87,7 +86,7 @@ class GroupList extends React.Component {
         let group = this.state.groups[id]
 
         group.name = this.refs.theTextNameInput.value
-        group.professorId = this.refs.theTextProfessorInput.value
+        group.professorId = 1
 
         this.setState({
             isUpdating: !this.state.isUpdating,
@@ -101,12 +100,10 @@ class GroupList extends React.Component {
         )
     }
     //Formulario de Edición
-    renderUpdateview = (id) => {        
+    renderUpdateview = (id) => {
         const group = this.state.groups[id]
 
-        const {professorOption}=this.state        
-        
-        console.log(group)
+        const { professorOption, professors } = this.state
         return <div className="group-item-create">
             <h5>Editar Grupo</h5>
             <Form>
@@ -114,13 +111,17 @@ class GroupList extends React.Component {
                     type="text"
                     placeholder="Nombre"
                     ref="theTextNameInput"
-                    value={group}
+                    defaultValue={group.name}
                 />
-                <select
-                    value={professorOption}
-                    ref="theTextProfessorInput"
-                    onChange={this.handleProfSelect}>
-                </select>
+                <div className="form-control">
+                    <span>Seleccione un Profesor: </span>
+                    <select
+                        defaultValue={professorOption}
+                        ref="theTextProfessorInput"
+                        onChange={this.handleProfSelect}>
+                        {professors}
+                    </select>
+                </div>
                 <button
                     onClick={this.onEditGroup}
                     className="form-control btn btn-success btn-sm">

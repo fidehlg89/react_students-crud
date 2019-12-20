@@ -29,14 +29,14 @@ class StudentList extends React.Component {
         )
 
         this.setState({
-            options: citieslist,
+            cities: citieslist,
             groups: grouplist,
             professors: professorslist,
             isCreating: !this.state.isCreating,
         })
     }
     renderCreateview() {
-        const { citiOption, groupOption, options, groups } = this.state
+        const { citiOption, groupOption, cities, groups } = this.state
         return <div className="student-item-create">
             <h5>Crear Estudiante</h5>
             <Form>
@@ -49,7 +49,7 @@ class StudentList extends React.Component {
 
                 <div className="form-control">
                     <span>Ciudad: </span>
-                    <select className="col-sm-4" value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} >{options}</select>
+                    <select className="col-sm-4" value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} >{cities}</select>
                 </div>
 
                 <div className="form-control">
@@ -102,7 +102,7 @@ class StudentList extends React.Component {
             <option value={item.name} key={item.id}>{item.name}</option>
         )
         this.setState({
-            options: citieslist,
+            cities: citieslist,
             groups: grouplist,
             isUpdating: !this.state.isUpdating,
             id: index,
@@ -125,27 +125,47 @@ class StudentList extends React.Component {
     }
     renderUpdateview = (id) => {
         const student = this.state.students[id]
-        const { citiOption, groupOption, options, groups } = this.state
+        const { citiOption, groupOption, cities, groups } = this.state
         return <div className="student-item-create">
             <h5>Editar Estudiante</h5>
             <Form>
-                <input className="form-control" 
-                type="email"
-                placeholder="Email" 
-                ref="theTextEmailInput" 
-                defaultValue={student.email} />
-                <input className="form-control" hidden type="number" ref="theTextIDInput"
+                <input className="form-control"
+                    type="email"
+                    placeholder="Email"
+                    ref="theTextEmailInput"
+                    defaultValue={student.email} />
+                <input className="form-control" hidden
+                    type="number"
+                    ref="theTextIDInput"
                     defaultValue={id} key={id} />
-                <input className="form-control" type="text" placeholder="Nombre" ref="theTextNameInput"
+                <input className="form-control"
+                    type="text"
+                    placeholder="Nombre"
+                    ref="theTextNameInput"
                     defaultValue={student.name} />
-                <input className="form-control" type="number" placeholder="Edad" ref="theTextEdadInput" defaultValue={student.edad} />
-                <input className="form-control" type="text" placeholder="Sexo" ref="theTextSexoInput" defaultValue={student.sexo} />
-                <input className="form-control" type="text" placeholder="Fecha de Nacimiento" defaultValue={student.fecha_nac}
+                <input className="form-control"
+                    type="number" placeholder="Edad"
+                    ref="theTextEdadInput"
+                    defaultValue={student.edad} />
+                <input className="form-control"
+                    type="text"
+                    placeholder="Sexo"
+                    ref="theTextSexoInput"
+                    defaultValue={student.sexo} />
+                <input className="form-control"
+                    type="text"
+                    placeholder="Fecha de Nacimiento"
+                    defaultValue={student.fecha_nac}
                     ref="theTextFecNacInput" />
 
                 <div className="form-control">
                     <span>Ciudad: </span>
-                    <select value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} defaultValue={student.lugar_nac}>{options}</select>
+                    <select value={citiOption}
+                        ref="theTextLugNacInput"
+                        onChange={this.handleCitiSelect}
+                        defaultValue={student.lugar_nac}>
+                        {cities}
+                    </select>
                 </div>
 
                 <div className="form-control">
