@@ -51,7 +51,7 @@ class GroupList extends React.Component {
             </Form>
         </div>
     }
-    onNewGroup = () => {
+    onNewGroup = () => {  
         this.setState({
             groups: [
                 ...this.state.groups,
@@ -61,7 +61,8 @@ class GroupList extends React.Component {
                     professorId: this.refs.theTextProfessorInput.value,
                 },
             ],
-            isCreating: false,
+            isCreating: false,            
+            professors:professors
         })
     }
     //Editando Grupos
@@ -83,10 +84,8 @@ class GroupList extends React.Component {
     onEditGroup = () => {
         const id = this.state.id
         let group = this.state.groups[id]
-
         group.name = this.refs.theTextNameInput.value
         group.professorId = this.refs.theTextProfessorInput.value
-
         this.setState({
             professors: professors,
             isUpdating: !this.state.isUpdating,

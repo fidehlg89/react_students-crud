@@ -14,18 +14,20 @@ class StudentList extends React.Component {
             cities: cities,
             isCreating: false,
             isUpdating: false,
+            startDate: new Date()
         }
         this.onNewStudent = this.onNewStudent.bind(this)
     }
+
     onCreateStudent = () => {
         let citieslist = cities.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>{item.name}</option>
         )
         let grouplist = groups.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>{item.name}</option>
         )
         let professorslist = professors.map(item =>
-            <option value={item.name} key={item.id}>{item.name}</option>
+            <option value={item.id} key={item.id}>{item.name}</option>
         )
 
         this.setState({
@@ -78,14 +80,13 @@ class StudentList extends React.Component {
                     edad: this.refs.theTextEdadInput.value,
                     sexo: this.refs.theTextSexoInput.value,
                     fecha_nac: this.refs.theTextFecNacInput.value,
-                    groupId: 2,
-                    cityId: 2,
+                    groupId: this.refs.theTextGroupInput.value,
+                    cityId: this.refs.theTextLugNacInput.value,
                 },
             ],
+            cities: cities,
             isCreating: false,
         })
-        console.log(this.refs.theTextGroupInput.value)
-        console.log(this.refs.theTextLugNacInput.value)
 
     }
     //Editando Estudiantes
