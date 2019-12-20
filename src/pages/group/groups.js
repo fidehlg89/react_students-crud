@@ -2,7 +2,7 @@ import React from "react"
 import { FaPen, FaTrash } from 'react-icons/fa'
 import Form from '../../components/form'
 import Table from '../../components/table'
-import { groups, professors } from "./../../db/data"
+import { groups, professors, students } from "./../../db/data"
 
 class GroupList extends React.Component {
 
@@ -11,6 +11,7 @@ class GroupList extends React.Component {
         this.state = {
             groups: groups,
             professors: professors,
+            students:students,
             isCreating: false,
             isUpdating: false,
             professorOption: '',
@@ -43,7 +44,7 @@ class GroupList extends React.Component {
                 <button
                     onClick={this.onNewGroup}
                     className="form-control btn btn-success btn-sm">Guardar
-                        </button>
+                </button>
                 <button
                     onClick={this.isCreating}
                     className="form-control btn btn-danger btn-sm">Cancelar
@@ -99,25 +100,26 @@ class GroupList extends React.Component {
             }
         )
     }
-
     //Formulario de Edición
-    renderUpdateview = (id) => {
-        const { professorOption, professors, groups } = this.state        
-        const group = groups[id]
+    renderUpdateview = (id) => {        
+        const group = this.state.groups[id]
+
+        const {professorOption}=this.state        
+        
+        console.log(group)
         return <div className="group-item-create">
             <h5>Editar Grupo</h5>
             <Form>
                 <input className="form-control"
                     type="text"
-                    placeholder="Name"
+                    placeholder="Nombre"
                     ref="theTextNameInput"
-                    defaultValue={group.name}
+                    value={group}
                 />
                 <select
                     value={professorOption}
                     ref="theTextProfessorInput"
                     onChange={this.handleProfSelect}>
-                    {professors}
                 </select>
                 <button
                     onClick={this.onEditGroup}

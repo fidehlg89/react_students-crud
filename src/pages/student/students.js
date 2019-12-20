@@ -9,56 +9,34 @@ class StudentList extends React.Component {
         super(props);
         this.state = {
             students: students,
-            student: [],
             professors: professors,
             groups: groups,
             cities: cities,
-            cityOption: '',
-            groupOption: '',
-            cityId: 0,
-            groupId: 0,
             isCreating: false,
-            isUpdating: false
+            isUpdating: false,
         }
         this.onNewStudent = this.onNewStudent.bind(this)
-        this.onUpdateStudent = this.onUpdateStudent.bind(this)
-        this.handleCitySelect = this.handleCitySelect.bind(this);
-        this.handleGroupSelect = this.handleGroupSelect.bind(this);
-    }
-
-    handleCitySelect = (e) => {
-        const cityId = e.target.value
-
-        this.setState(
-            {
-                cityOption: cityId
-            }
-        )
-    }
-    handleGroupSelect = (e) => {
-        const groupId = e.target.value
-        this.setState(
-            {
-                groupOption: groupId
-            }
-        )
     }
     onCreateStudent = () => {
         let citieslist = cities.map(item =>
-            <option value={item.id} key={item.id}>{item.name}</option>
+            <option value={item.name} key={item.id}>{item.name}</option>
         )
         let grouplist = groups.map(item =>
-            <option value={item.id} key={item.id}>{item.name}</option>
+            <option value={item.name} key={item.id}>{item.name}</option>
+        )
+        let professorslist = professors.map(item =>
+            <option value={item.name} key={item.id}>{item.name}</option>
         )
 
         this.setState({
-            cities: citieslist,
+            options: citieslist,
             groups: grouplist,
+            professors: professorslist,
             isCreating: !this.state.isCreating,
         })
     }
     renderCreateview() {
-        const { cityOption, groupOption, cities, groups } = this.state
+        const { citiOption, groupOption, options, groups } = this.state
         return <div className="student-item-create">
             <h5>Crear Estudiante</h5>
             <Form>
@@ -71,34 +49,24 @@ class StudentList extends React.Component {
 
                 <div className="form-control">
                     <span>Ciudad: </span>
-                    <select className="col-sm-4"
-                        value={cityOption}
-                        ref="theTextLugNacInput"
-                        onChange={this.handleCitySelect} >
-                        {cities}</select>
+                    <select className="col-sm-4" value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} >{options}</select>
                 </div>
+
                 <div className="form-control">
                     <span>Seleccione grupo: </span>
-                    <select className="col-sm-4"
-                        value={groupOption}
-                        ref="theTextGroupInput"
-                        onChange={this.handleGroupSelect} >
-                        {groups}
-                    </select>
+                    <select className="col-sm-4" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} >{groups}</select>
                 </div>
                 <button
                     onClick={this.onNewStudent}
-                    className="form-control btn btn-success btn-sm">
-                    Guardar
-                </button>
+                    className="form-control btn btn-success btn-sm">Guardar
+                        </button>
                 <button
                     onClick={this.isCreating}
-                    className="form-control btn btn-danger btn-sm">
-                    Cancelar
-                </button>
+                    className="form-control btn btn-danger btn-sm"> Cancelar
+                        </button>
             </Form>
         </div>
-    }
+    };
     onNewStudent = () => {
         this.setState({
             students: [
@@ -110,12 +78,15 @@ class StudentList extends React.Component {
                     edad: this.refs.theTextEdadInput.value,
                     sexo: this.refs.theTextSexoInput.value,
                     fecha_nac: this.refs.theTextFecNacInput.value,
-                    groupId: this.refs.theTextLugNacInput.value,
-                    cityId: this.refs.theTextGroupInput.value,
+                    groupId: 2,
+                    cityId: 2,
                 },
             ],
             isCreating: false,
         })
+        console.log(this.refs.theTextGroupInput.value)
+        console.log(this.refs.theTextLugNacInput.value)
+
     }
     //Editando Estudiantes
     onUpdateStudent = (i) => {
@@ -125,20 +96,14 @@ class StudentList extends React.Component {
             return;
         }
         let citieslist = cities.map(item =>
-            <option value={item.id} key={item.id} >
-                {item.name}
-            </option>
+            <option value={item.name} key={item.id}>{item.name}</option>
         )
         let grouplist = groups.map(item =>
-            <option value={item.id} key={item.id}>
-                {item.name}
-            </option>
+            <option value={item.name} key={item.id}>{item.name}</option>
         )
         this.setState({
-            cityOption: (index + 1),
-            cities: citieslist,
+            options: citieslist,
             groups: grouplist,
-            student: students[index],
             isUpdating: !this.state.isUpdating,
             id: index,
         })
@@ -151,8 +116,8 @@ class StudentList extends React.Component {
         student.edad = this.refs.theTextEdadInput.value
         student.sexo = this.refs.theTextSexoInput.value
         student.fecha_nac = this.refs.theTextFecNacInput.value
-        student.cityId = this.refs.theTextLugNacInput.value
-        student.groupId = this.refs.theTextGroupInput.value
+        student.lugar_nac = this.refs.theTextLugNacInput.value
+        student.group = this.refs.theTextGroupInput.value
 
         this.setState({
             isUpdating: !this.state.isUpdating,
@@ -160,61 +125,44 @@ class StudentList extends React.Component {
     }
     renderUpdateview = (id) => {
         const student = this.state.students[id]
-        const { cityOption, groupOption, cities, groups } = this.state
-
+        const { citiOption, groupOption, options, groups } = this.state
         return <div className="student-item-create">
             <h5>Editar Estudiante</h5>
             <Form>
-                <input className="form-control"
-                    type="email"
-                    placeholder="Email"
-                    ref="theTextEmailInput"
-                    defaultValue={student.email} />
-                <input className="form-control"
-                    type="text"
-                    placeholder="Nombre" ref="theTextNameInput"
+                <input className="form-control" 
+                type="email"
+                placeholder="Email" 
+                ref="theTextEmailInput" 
+                defaultValue={student.email} />
+                <input className="form-control" hidden type="number" ref="theTextIDInput"
+                    defaultValue={id} key={id} />
+                <input className="form-control" type="text" placeholder="Nombre" ref="theTextNameInput"
                     defaultValue={student.name} />
-                <input className="form-control"
-                    type="number"
-                    placeholder="Edad" ref="theTextEdadInput"
-                    defaultValue={student.edad} />
-                <input className="form-control" type="text"
-                    placeholder="Sexo" ref="theTextSexoInput"
-                    defaultValue={student.sexo} />
+                <input className="form-control" type="number" placeholder="Edad" ref="theTextEdadInput" defaultValue={student.edad} />
+                <input className="form-control" type="text" placeholder="Sexo" ref="theTextSexoInput" defaultValue={student.sexo} />
                 <input className="form-control" type="text" placeholder="Fecha de Nacimiento" defaultValue={student.fecha_nac}
                     ref="theTextFecNacInput" />
 
                 <div className="form-control">
                     <span>Ciudad: </span>
-                    <select
-                        value={cityOption}
-                        ref="theTextLugNacInput"
-                        onChange={this.handleCitySelect}>
-                        {cities}
-                    </select>
+                    <select value={citiOption} ref="theTextLugNacInput" onChange={this.handleCitiSelect} defaultValue={student.lugar_nac}>{options}</select>
                 </div>
 
                 <div className="form-control">
                     <span>Seleccione grupo: </span>
-                    <select className="col-sm-4"
-                        value={groupOption}
-                        ref="theTextGroupInput"
-                        onChange={this.handleGroupSelect}>
-                        {groups}
-                    </select>
+                    <select className="col-sm-4" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} >{groups}</select>
                 </div>
                 <button
                     onClick={this.onEditStudent}
-                    className="form-control btn btn-success btn-sm">
-                    Guardar
+                    className="form-control btn btn-success btn-sm">Guardar
                 </button>
                 <button
-                    className="form-control btn btn-danger btn-sm">
-                    Cancelar
+                    className="form-control btn btn-danger btn-sm"> Cancelar
                 </button>
             </Form>
         </div>
     }
+
     //Eliminando Estudiante
     onDeleteStudent = (student) => {
         const { students } = this.state
@@ -228,11 +176,13 @@ class StudentList extends React.Component {
             students: newItems
         })
     }
+
     //Vista Principal del CRUD Estudiante
     renderDefaultview = () => {
         const { students } = this.state
         let itemslist = students.map(item =>
             <tr key={item.id}>
+
                 <th>
                     {item.name}
                 </th>
@@ -295,6 +245,7 @@ class StudentList extends React.Component {
             }
         </div>
     }
+
     render() {
         return (
             <div className="container">
