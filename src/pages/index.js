@@ -2,14 +2,12 @@ import React from "react";
 import "./style.css"
 
 class MainContainer extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
             props
         }
     }
-
     renderMainPage() {
         return (
             <div className="jumbotron" align="center" hidden={this.state.isHidden}>
@@ -19,7 +17,6 @@ class MainContainer extends React.Component {
             </div>
         );
     }
-
     render() {
         return (
             <div className="site-index">

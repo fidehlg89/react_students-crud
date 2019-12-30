@@ -6,7 +6,6 @@ import Form from '../../components/form'
 //Importando modulo para trabajar con fechas
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import StudentView from "./view";
 
 class StudentList extends React.Component {
 
@@ -76,7 +75,8 @@ class StudentList extends React.Component {
                     <button
                         onClick={this.onNewStudent}
                         className="btn btn-success btn-sm">Guardar
-                        </button>
+                    </button>
+                    <span> </span>
                     <button
                         onClick={this.isCreating}
                         className="btn btn-danger btn-sm"> Cancelar
@@ -87,7 +87,7 @@ class StudentList extends React.Component {
     };
     onNewStudent = () => {
         let fechaNac = this.state.startDate;
-        let fecha=(fechaNac.getUTCDate()+'/'+(fechaNac.getMonth()+1)+'/'+fechaNac.getFullYear())
+        let fecha = (fechaNac.getUTCDate() + '/' + (fechaNac.getMonth() + 1) + '/' + fechaNac.getFullYear())
         this.setState({
             students: [
                 ...this.state.students,
@@ -129,7 +129,7 @@ class StudentList extends React.Component {
     }
     onEditStudent = () => {
         let fechaNac = this.state.startDate;
-        let fecha=(fechaNac.getUTCDate()+'/'+(fechaNac.getMonth()+1)+'/'+fechaNac.getFullYear())
+        let fecha = (fechaNac.getUTCDate() + '/' + (fechaNac.getMonth() + 1) + '/' + fechaNac.getFullYear())
         const id = this.state.id
         let student = this.state.students[id]
         student.name = this.refs.theTextNameInput.value
@@ -141,8 +141,8 @@ class StudentList extends React.Component {
         student.groupId = this.refs.theTextGroupInput.value
 
         this.setState({
-            student:students,
-            cities:cities,
+            student: students,
+            cities: cities,
             isUpdating: !this.state.isUpdating,
         })
     }
@@ -152,25 +152,25 @@ class StudentList extends React.Component {
         return <div className="student-item-create">
             <h5>Editar Estudiante</h5>
             <Form>
-                <input className="form-control"
+                <input hidden
+                    type="number"
+                    ref="theTextIDInput"
+                    defaultValue={id} key={id} />
+                <input
                     type="email"
                     placeholder="Email"
                     ref="theTextEmailInput"
                     defaultValue={student.email} />
-                <input className="form-control" hidden
-                    type="number"
-                    ref="theTextIDInput"
-                    defaultValue={id} key={id} />
-                <input className="form-control"
+                <input
                     type="text"
                     placeholder="Nombre"
                     ref="theTextNameInput"
                     defaultValue={student.name} />
-                <input className="form-control"
+                <input
                     type="number" placeholder="Edad"
                     ref="theTextEdadInput"
                     defaultValue={student.edad} />
-                <input className="form-control"
+                <input
                     type="text"
                     placeholder="Sexo"
                     ref="theTextSexoInput"
@@ -180,7 +180,7 @@ class StudentList extends React.Component {
                     onChange={this.handleDateChange}
                 />
 
-                <div className="form-control">
+                <div>
                     <span>Ciudad: </span>
                     <select value={citiOption}
                         ref="theTextLugNacInput"
@@ -190,16 +190,17 @@ class StudentList extends React.Component {
                     </select>
                 </div>
 
-                <div className="form-control">
+                <div>
                     <span>Seleccione grupo: </span>
                     <select className="col-sm-4" value={groupOption} ref="theTextGroupInput" onChange={this.handleGroupSelect} >{groups}</select>
                 </div>
                 <button
                     onClick={this.onEditStudent}
-                    className="form-control btn btn-success btn-sm">Guardar
+                    className="btn btn-success btn-sm">Guardar
                 </button>
+                <span> </span>
                 <button
-                    className="form-control btn btn-danger btn-sm"> Cancelar
+                    className="btn btn-danger btn-sm"> Cancelar
                 </button>
             </Form>
         </div>
@@ -291,9 +292,8 @@ class StudentList extends React.Component {
                 {this.state.isCreating || this.state.isUpdating ? '' : this.renderDefaultview()}
                 {this.state.isCreating ? this.renderCreateview() : ''}
                 {this.state.isUpdating ? this.renderUpdateview(this.state.id) : ''}
-                <StudentView/>
             </div>
-            
+
         );
     }
 }

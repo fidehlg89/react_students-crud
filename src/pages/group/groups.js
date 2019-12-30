@@ -35,18 +35,19 @@ class GroupList extends React.Component {
         return <div className="group-item-create">
             <h5>Crear Grupo</h5>
             <Form>
-                <input className="form-control" type="text" placeholder="Nombre" ref="theTextNameInput" />
-                <div className="form-control">
+                <input type="text" placeholder="Nombre" ref="theTextNameInput" />
+                <div>
                     <span>Seleccione Profesor: </span>
                     <select className="" value={professorOption} ref="theTextProfessorInput" onChange={this.handleProfSelect}>{professors}</select>
                 </div>
                 <button
                     onClick={this.onNewGroup}
-                    className="form-control btn btn-success btn-sm">Guardar
+                    className="btn btn-success btn-sm">Guardar
                 </button>
+                <span> </span>
                 <button
                     onClick={this.isCreating}
-                    className="form-control btn btn-danger btn-sm">Cancelar
+                    className="btn btn-danger btn-sm">Cancelar
                 </button>
             </Form>
         </div>
@@ -106,13 +107,13 @@ class GroupList extends React.Component {
         return <div className="group-item-create">
             <h5>Editar Grupo</h5>
             <Form>
-                <input className="form-control"
+                <input
                     type="text"
                     placeholder="Nombre"
                     ref="theTextNameInput"
                     defaultValue={group.name}
                 />
-                <div className="form-control">
+                <div>
                     <span>Seleccione un Profesor: </span>
                     <select
                         defaultValue={professorOption}
@@ -123,11 +124,12 @@ class GroupList extends React.Component {
                 </div>
                 <button
                     onClick={this.onEditGroup}
-                    className="form-control btn btn-success btn-sm">
+                    className="btn btn-success btn-sm">
                     Guardar
                 </button>
+                <span> </span>
                 <button
-                    className="form-control btn btn-danger btn-sm">
+                    className="btn btn-danger btn-sm">
                     Cancelar
                 </button>
             </Form>

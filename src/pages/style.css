@@ -6,13 +6,16 @@ body {
 .main-page{
   margin-top: 70px;
 }
-.container input{  
-  width: 100%;
+.container input,select{  
+  width: 50%;
   font-size: 14px;
   color: #444;
   box-sizing: border-box;
   outline: none;
   border-radius: 5px; 
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: block
 } 
 .form-horizontal{
   margin-top: 20px;
@@ -26,9 +29,3 @@ body {
   margin-top: 15px;
   margin-bottom: 15px;
 }
-
-
-  
-  
-  
-  

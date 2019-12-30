@@ -3,7 +3,7 @@ import StudentPage from "./pages/student"
 import GroupPage from "./pages/group"
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import MainContainer from "./pages"
-import NotFound from "./pages/NotFound"
+import NotFound from "./pages/site/error"
 
 class App extends React.Component {
     render() {
