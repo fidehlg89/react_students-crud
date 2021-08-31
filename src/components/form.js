@@ -10,7 +10,7 @@ class Form extends React.Component {
     }
 
     render() {
-        return <form className="form-horizontal">            
+        return <form className="form-horizontal">
             <div className="form-group">
                 {this.props.children}
             </div>

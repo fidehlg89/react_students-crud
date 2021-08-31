@@ -1,3 +1,9 @@
+### Students management CRUD
+
+React Project to manage students from list
+
+### Project
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

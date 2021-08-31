@@ -1,31 +1,29 @@
 body {
   color: #797979;
   font-family: 'Lato', sans-serif;
-  font-size: 12px !important;  
+  font-size: 12px !important;
 }
-.main-page{
+
+.main-page {
   margin-top: 70px;
 }
-.container input,select{  
+
+.container input,
+select {
   width: 50%;
   font-size: 14px;
   color: #444;
   box-sizing: border-box;
   outline: none;
-  border-radius: 5px; 
+  border-radius: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
   display: block
-} 
-.table {  
+}
+
+.table {
   color: #797979;
   width: 100%;
   margin-top: 15px;
   margin-bottom: 15px;
 }
-
-
-  
-  
-  
-  

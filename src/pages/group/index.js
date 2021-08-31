@@ -1,11 +1,9 @@
 import React from "react";
 import GroupList from "./groups";
 
-class GroupPage extends React.Component {
-    render() {
-        return (
-            <GroupList />
-        );
-    }
-}
-export default GroupPage
+const GroupPage = () =>
+(
+    <GroupList />
+)
+
+export default GroupPage;

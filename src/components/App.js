@@ -1,16 +1,15 @@
 import React from "react"
-import StudentPage from "./pages/student"
-import GroupPage from "./pages/group"
+import StudentPage from "../pages/Student"
+import GroupPage from "../pages/Group"
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import MainContainer from "./pages"
-import NotFound from "./pages/site/error"
+import Home from "../pages/Site/Home"
+import NotFound from "../pages/Site/NotFound"
 
-class App extends React.Component {
-    render() {
+const App = () => {
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/" component={MainContainer} />
+                    <Route exact path="/" component={Home} />
                     <Route exact path="/estudiantes" component={StudentPage} />
                     <Route exact path="/grupos" component={GroupPage} />
                     <Route component={NotFound} />
@@ -18,6 +17,5 @@ class App extends React.Component {
             </BrowserRouter>
         );
     }
-}
 
 export default App;
