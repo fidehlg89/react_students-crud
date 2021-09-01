@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css"
+import { Link } from "react-router-dom";
 
 const Home = () =>
 (
@@ -7,7 +8,11 @@ const Home = () =>
         <div className="jumbotron" align="center">
             <h1>Bienvenidos!</h1>
             <p className="lead">Sistema de Gestión de Estudiantes</p>
-            <p><a className="btn btn-lg btn-secondary" href="/estudiantes"> Administrar estudiantes</a></p>
+            <p>
+                <Link to="/estudiantes" className="btn btn-lg btn-secondary">
+                    Administrar estudiantes
+                </Link>
+            </p>
         </div>
     </div>
 )
