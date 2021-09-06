@@ -1,16 +1,16 @@
 import React from 'react';
 import { FaHome } from 'react-icons/fa';
+import { Link } from 'react-router-dom'
 import {
     Collapse,
     Navbar,
     NavbarToggler,
-    NavbarBrand,
     Nav,
 } from 'reactstrap';
 
 const Navigation = (props) => (
     <Navbar color="dark" light expand="md" fixed="top">
-        <NavbarBrand className="text-white" href="/"><FaHome /></NavbarBrand>
+        <Link className="text-white navbar-brand" to="/"><FaHome /></Link>
         <NavbarToggler />
         <Collapse navbar>
             <Nav className="mr-auto" navbar>

@@ -8,6 +8,7 @@ import Navigation from './navigation'
 import {
     NavItem
 } from 'reactstrap'
+import CreateGroup from "../pages/Group/CreateGroup"
 
 const App = () => {
     return (
@@ -28,6 +29,7 @@ const App = () => {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/estudiantes" component={StudentPage} />
                 <Route exact path="/grupos" component={GroupPage} />
+                <Route exact path="/grupos/nuevo" component={CreateGroup} />
                 <Route component={NotFound} />
             </Switch>
         </BrowserRouter>
