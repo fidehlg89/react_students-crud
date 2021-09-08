@@ -2,6 +2,8 @@ import React from "react";
 import { groups, professors } from "./../../db/data";
 import Table from "../../components/table";
 import { Link } from 'react-router-dom'
+import { Button, ButtonGroup, Icon } from "@blueprintjs/core";
+
 
 const GroupList = (props) => {
   return (
@@ -23,22 +25,11 @@ const GroupList = (props) => {
                 <th>{item.name}</th>
                 <th>{professors[item.professorId - 1].name}</th>
                 <th>
-                  <div>
-                    <button
-                      type="submit"
-                      className="btn btn-default btn-sm btn-success"
-                    // onClick={() => onUpdateGroup(item.id)}
-                    >
-                      <span> Editar </span>
-                    </button>
-                    <span> | </span>
-                    <button
-                      className="btn btn-default btn-sm btn-danger"
-                    // onClick={() => onDeleteGroup(item)}
-                    >
-                      <span> Eliminar </span>
-                    </button>
-                  </div>
+                <ButtonGroup minimal>                   
+                    <Button intent="success"><Icon icon="edit" size={12}/></Button>                    
+                      <span className="bp3-divider"></span>
+                      <Button intent="danger"><Icon icon="trash" size={12}/></Button>                  
+                  </ButtonGroup>
                 </th>
               </tr>
             ))}
