@@ -5,8 +5,8 @@
             "name": "Pepe",
             "email":"pepe@mail.com",
             "edad":25,
-            "sexo":"M", 
-            "fecha_nac": "08/01/94",         
+            "sexo":"M",
+            "fecha_nac": "08/01/94",
             "groupId": 1,
             "cityId": 2
         },
@@ -15,8 +15,8 @@
             "name": "Juan",
             "email":"juan@mail.com",
             "edad":30,
-            "sexo":"M", 
-            "fecha_nac": "10/10/89", 
+            "sexo":"M",
+            "fecha_nac": "10/10/89",
             "groupId": 2,
             "cityId": 4
         },
@@ -25,8 +25,8 @@
             "name": "Peter",
             "email":"peter@mail.com",
             "edad":28,
-            "sexo":"M", 
-            "fecha_nac": "01/08/92",        
+            "sexo":"M",
+            "fecha_nac": "01/08/92",
             "groupId": 3,
             "cityId": 3
         },
@@ -35,7 +35,7 @@
             "name": "Pablo",
             "email":"pablon@mail.com",
             "edad":31,
-            "sexo":"M", 
+            "sexo":"M",
             "fecha_nac": "09/02/88",
             "groupId": 2,
             "cityId": 1
@@ -60,7 +60,8 @@
         {
             "id": 4,
             "name": "A-56",
-            "professorId": 4        }
+            "professorId": 4
+        }
     ],
     "cities": [
         {

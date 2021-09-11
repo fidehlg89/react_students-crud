@@ -8,31 +8,33 @@ import Navigation from './navigation'
 import {
     NavItem
 } from 'reactstrap'
-import CreateGroup from "../pages/Group/CreateGroup"
+import CreateGroup from "../pages/Group/CreateGroup";
 
 const App = () => {
     return (
-        <BrowserRouter>
-            <Navigation>
-                <NavItem>
-                    <Link to="/estudiantes" className="text-white nav-link">
-                        ESTUDIANTES
-                    </Link>
-                </NavItem>
-                <NavItem>
-                    <Link to="/grupos" className="text-white nav-link">
-                        GRUPOS
-                    </Link>
-                </NavItem>
-            </Navigation>
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/estudiantes" component={StudentPage} />
-                <Route exact path="/grupos" component={GroupPage} />
-                <Route exact path="/grupos/nuevo" component={CreateGroup} />
-                <Route component={NotFound} />
-            </Switch>
-        </BrowserRouter>
+        <div className="container">
+            <BrowserRouter>
+                <Navigation>
+                    <NavItem>
+                        <Link to="/estudiantes" className="text-white nav-link">
+                            ESTUDIANTES
+                        </Link>
+                    </NavItem>
+                    <NavItem>
+                        <Link to="/grupos" className="text-white nav-link">
+                            GRUPOS
+                        </Link>
+                    </NavItem>
+                </Navigation>
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/estudiantes" component={StudentPage} />
+                    <Route exact path="/grupos" component={GroupPage} />
+                    <Route exact path="/grupos/nuevo" component={CreateGroup} />
+                    <Route component={NotFound} />
+                </Switch>
+            </BrowserRouter>
+        </div>
     );
 }
 

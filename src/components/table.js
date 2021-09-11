@@ -1,7 +1,8 @@
 import React from "react";
+import "./table.css"
 
 const Table = (props) => (
-    <table className="table table-striped table-hover table-responsive">
+    <table className="bp3-html-table bp3-html-table-striped">
         {props.children}
     </table>
 )
