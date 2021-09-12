@@ -27,3 +27,12 @@ select {
   margin-top: 15px;
   margin-bottom: 15px;
 }
+
+.site-index {
+  background-image: url("https://s35691.pcdn.co/wp-content/uploads/2017/08/iStock-176443118-170908.jpg");
+  background-size: cover;
+}
+
+.jumbotron {
+  background-color: #b5d9ff73 !important;
+}

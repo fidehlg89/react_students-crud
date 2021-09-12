@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import GroupList from "./GroupList";
+import GroupsList from "./GroupsList";
 import axiosAPI from "./../../service/api";
 import { Card, Elevation } from "@blueprintjs/core";
 
 const GroupPage = () => {
   const [groups, setGroups] = useState([]);
-  //const [loading, isLoading] = useState[true]
+  const [loading, isLoading]= useState(true);
 
   const getGroups = () => {
     axiosAPI
@@ -13,7 +13,7 @@ const GroupPage = () => {
       .then((response) => {
         var data = response.data;
         setGroups(data);
-        //isLoading(false);
+        isLoading(false);
       }).catch((error) => {
         alert(error.response)
       })
@@ -38,10 +38,10 @@ const GroupPage = () => {
 
   return (
     <Card elevation={Elevation.TWO}>
-        <GroupList
+        <GroupsList
           groups={groups}
           handleDelete={handleDelete}
-        /* loading={loading} */
+          loading={loading}
         />
     </Card>
   )
