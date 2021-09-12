@@ -8,7 +8,7 @@ const StudentsList = ({ students, handleDelete, loading }) => {
     return (
         <div>
             <H5>Lista de Estudiantes</H5>
-            <Button onClick={() => history.push("/estudiante/nuevo")} intent="primary">Nuevo Estudiante</Button>
+            <Button onClick={() => history.push("/estudiantes/nuevo")} intent="primary">Nuevo Estudiante</Button>
             {loading === true ? <div><Spinner intent="primary" size={50} /></div> : null}
             {students.length > 0 ? (
                 <Table>

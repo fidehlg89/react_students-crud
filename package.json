@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@blueprintjs/core": "^3.49.1",
+    "@blueprintjs/datetime": "^3.23.9",
     "@blueprintjs/table": "^3.9.3",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",

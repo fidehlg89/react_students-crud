@@ -1,55 +1,57 @@
 import React, { useState } from 'react';
-import Form from "../../components/form";
-import { professors, groups } from "./../../db/data.json";
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import {
+    FormGroup,
+    Label,
+    Classes,
+    H3,
+    ButtonGroup,
+    Button
+} from '@blueprintjs/core';
+import axiosAPI from "./../../service/api"
 
 const CreateGroup = () => {
     const history = useHistory();
-    const [group, setGroup] = useState("");
-    const [professor, setProfessor] = useState("");
-    const [groupsList, setGroups] = useState(groups);
+    const [group, setGroup] = useState([]);
 
-    const onNewGroup = (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
-        setGroups([
-            ...groupsList,
-            {
-                id: Date.now(),
-                name: group,
-                professorId: professor,
-            }])
-        history.push("/grupos");
-        console.log(groupsList);
-    };
+        axiosAPI
+            .post("group", group)
+            .then((response) => {
+                if (response.status === 201) {
+                    alert('Creado satisfactoriamente');
+                    history.push("/grupos");
+                }
+            }).catch((error) => {
+                alert('Error al procesar la información, intentelo más tarde. ' + error.response)
+            })
+    }
 
     const handleChange = (e) => {
-        setGroup(e.target.value);
-        setProfessor(e.target.value);
+        e.preventDefault();
+        setGroup({
+            ...group,
+            [e.target.name]: e.target.value
+        });
     }
 
     return (
-        <div>
-            <div className="group-item-create">
-                <h5>Crear Grupo</h5>
-                <Form>
-                    <input type="text" placeholder="Nombre" onChange={handleChange} />
-                    <div>
-                        <span>Seleccione Profesor: </span>
-                        <select id="select" onChange={handleChange}>
-                            {professors.map((item, index) => (
-                                <option key={index} value={item.id}>{item.name}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <button onClick={onNewGroup} className="btn btn-success btn-sm">
-                        Guardar
-                    </button>
-                    <span> </span>
-                    <button className="btn btn-danger btn-sm">
-                        Cancelar
-                    </button>
-                </Form>
-            </div>
+        <div style={{ width: 500 + 'px' }}>
+            <H3>Nuevo Grupo</H3>
+            <form onSubmit={handleSubmit}>
+            <FormGroup>
+                <Label>
+                    Nombre
+                    <input className={Classes.INPUT} name="name" placeholder="Nombre" onChange={handleChange} />
+                </Label>
+                <ButtonGroup>
+                    <Button intent="primary" type="submit" text="Guardar y Salir" ></Button>
+                    <span className="bp3-divider"></span>
+                    {/* <Button type="reset" text="Guardar y Crear" onClick={NewStudent}></Button> */}
+                </ButtonGroup>
+            </FormGroup>
+            </form>
         </div>
     )
 };

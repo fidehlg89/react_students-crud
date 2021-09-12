@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import StudentsList from "./StudentsList";
 import axiosAPI from "./../../service/api";
-import { Card, Elevation } from "@blueprintjs/core";
 
 const StudentPage = () => {
   const [students, setStudents] = useState([]);
@@ -37,13 +36,11 @@ const StudentPage = () => {
   }, [])
 
   return (
-    <Card elevation={Elevation.TWO}>
-        <StudentsList
-          students={students}
-          handleDelete={handleDelete}
-          loading={loading}
-        />
-    </Card>
+    <StudentsList
+      students={students}
+      handleDelete={handleDelete}
+      loading={loading}
+    />
   )
 }
 
