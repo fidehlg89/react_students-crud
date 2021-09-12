@@ -1,22 +1,26 @@
 import React from 'react';
-import { FaHome } from 'react-icons/fa';
 import { Link } from 'react-router-dom'
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    Nav,
-} from 'reactstrap';
+import { Navbar, Alignment, Button } from "@blueprintjs/core";
 
 const Navigation = (props) => (
-    <Navbar color="dark" light expand="md" fixed="top">
-        <Link className="text-white navbar-brand" to="/"><FaHome /></Link>
-        <NavbarToggler />
-        <Collapse navbar>
-            <Nav className="mr-auto" navbar>
-                {props.children}
-            </Nav>
-        </Collapse>
+    <Navbar className="bp3-dark">
+        <Navbar.Group align={Alignment.LEFT}>
+            <Navbar.Heading style={{margin: '0 auto', width: 30+'px'}}>
+                <Link to="/" className="text-white navbar-brand">
+                    <Button className="bp3-minimal" icon="home" />
+                </Link>
+            </Navbar.Heading>
+            <Navbar.Divider />
+            <Link to="/estudiantes" className="text-white nav-link">
+                <Button className="bp3-minimal" icon="person" text="Listado de Estudiantes" />
+            </Link>
+            <Link to="/grupos" className="text-white nav-link">
+                <Button className="bp3-minimal" icon="people" text="Grupos" />
+            </Link>
+        </Navbar.Group>
+        <Navbar.Group align={Alignment.RIGHT}>
+            <Button className="bp3-minimal" icon="log-out" />
+        </Navbar.Group>
     </Navbar>
 )
 
