@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
-    FormGroup,
-    Label,
-    Classes,
-    H3,
-    ButtonGroup,
-    Button
+    H3
 } from '@blueprintjs/core';
 import axiosAPI from "./../../service/api"
+import GroupForm from '../../components/GroupForm';
 
 const CreateGroup = () => {
     const history = useHistory();
-    const [group, setGroup] = useState([]);
+    const [group, setGroup] = useState({name:""});
 
-    const handleSubmit = async e => {
+    const onSubmit = async e => {
         e.preventDefault();
         axiosAPI
             .post("group", group)
@@ -28,7 +24,7 @@ const CreateGroup = () => {
             })
     }
 
-    const handleChange = (e) => {
+    const onChange = (e) => {
         e.preventDefault();
         setGroup({
             ...group,
@@ -38,22 +34,10 @@ const CreateGroup = () => {
 
     return (
         <div style={{ width: 500 + 'px' }}>
-            <H3>Nuevo Grupo</H3>
-            <form onSubmit={handleSubmit}>
-            <FormGroup>
-                <Label>
-                    Nombre
-                    <input className={Classes.INPUT} name="name" placeholder="Nombre" onChange={handleChange} />
-                </Label>
-                <ButtonGroup>
-                    <Button intent="primary" type="submit" text="Guardar y Salir" ></Button>
-                    <span className="bp3-divider"></span>
-                    {/* <Button type="reset" text="Guardar y Crear" onClick={NewStudent}></Button> */}
-                </ButtonGroup>
-            </FormGroup>
-            </form>
+            <H3>Nuevo Estudiante</H3>
+            <GroupForm onSubmit={onSubmit} onChange={onChange} form={group} />
         </div>
-    )
+        )
 };
 
 export default CreateGroup;

@@ -2,12 +2,14 @@ import React from "react"
 import StudentPage from "../pages/Student"
 import GroupPage from "../pages/Group"
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Card, Elevation } from "@blueprintjs/core";
 import Home from "../pages/Site/Home"
 import NotFound from "../pages/Site/NotFound";
 import CreateGroup from "../pages/Group/CreateGroup";
 import Navigation from "./navigation";
 import CreateStudent from "../pages/Student/CreateStudent";
-import { Card, Elevation } from "@blueprintjs/core";
+import UpdateStudent from "../pages/Student/UpdateStudent"
+import UpdateGroup from "../pages/Group/UpdateGroup";
 
 const App = () => {
     return (
@@ -19,8 +21,10 @@ const App = () => {
                         <Route exact path="/" component={Home} />
                         <Route exact path="/estudiantes" component={StudentPage} />
                         <Route exact path="/estudiantes/nuevo" component={CreateStudent} />
+                        <Route exact path="/estudiantes/editar/:id" component={UpdateStudent} />
                         <Route exact path="/grupos" component={GroupPage} />
                         <Route exact path="/grupos/nuevo" component={CreateGroup} />
+                        <Route exact path="/grupos/editar/:id" component={UpdateGroup} />
                         <Route component={NotFound} />
                     </Switch>
                 </Card>

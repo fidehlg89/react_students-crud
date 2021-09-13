@@ -4,11 +4,11 @@ import {
     H3
 } from '@blueprintjs/core';
 import axiosAPI from "./../../service/api"
-import Form from "./../../components/Form"
+import StudentForm from "./../../components/StudentForm"
 
 const CreateStudent = () => {
     const history = useHistory();
-    const [student, setStudent] = useState([]);
+    const [student, setStudent] = useState({name:"", email:"", age:"", sex:"", birthDate:""});
 
     const onSubmit = async e => {
         e.preventDefault();
@@ -35,7 +35,7 @@ const CreateStudent = () => {
     return (
         <div style={{ width: 500 + 'px' }}>
             <H3>Nuevo Estudiante</H3>
-            <Form onSubmit={onSubmit} onChange={onChange} form={student} />
+            <StudentForm onSubmit={onSubmit} onChange={onChange} form={student} />
         </div>
     )
 };

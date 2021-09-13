@@ -5,6 +5,9 @@ import { Button, ButtonGroup, Icon, H5, Spinner } from "@blueprintjs/core";
 
 const GroupsList = ({ groups, handleDelete, loading }) => {
   const history = useHistory();
+  const onEdit = (id) => {
+    history.push("/grupos/editar/" + id);
+  }
   return (
     <div>
       <H5>Lista de Grupos</H5>
@@ -26,7 +29,7 @@ const GroupsList = ({ groups, handleDelete, loading }) => {
                 <td>{item.name}</td>
                 <td>
                   <ButtonGroup minimal>
-                    <Button intent="success"><Icon icon="edit" size={12} /></Button>
+                    <Button intent="success" onClick={() => onEdit(item.id)}><Icon icon="edit" size={12} /></Button>
                     <span className="bp3-divider"></span>
                     <Button intent="danger" onClick={() => handleDelete(item)}><Icon icon="trash" size={12} /></Button>
                   </ButtonGroup>
