@@ -1,22 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import StudentsList from "./StudentsList";
 import axiosAPI from "./../../service/api";
+import { connect } from 'react-redux';
+import { getStudentsAsync } from '../../redux/actions/asyncActions/studentAsync';
 
-const StudentPage = () => {
-  const [students, setStudents] = useState([]);
-  const [loading, isLoading] = useState(true);
-
-  const getStudents = () => {
-    axiosAPI
-      .get('student')
-      .then((response) => {
-        var data = response.data;
-        setStudents(data);
-        isLoading(false);
-      }).catch((error) => {
-        alert(error.response)
-      })
-  }
+const StudentPage = ({ students, studentsData, loading = 'false' }) => {
 
   const handleDelete = (item) => {
     axiosAPI
@@ -24,7 +12,6 @@ const StudentPage = () => {
       .then((response) => {
         if (response.status === 204) {
           alert("Objeto eliminado satisfactoriamente");
-          getStudents();
         }
       }).catch((error) => {
         alert(error.response)
@@ -32,8 +19,8 @@ const StudentPage = () => {
   }
 
   useEffect(() => {
-    getStudents();
-  }, [])
+    studentsData();
+  }, [studentsData]);
 
   return (
     <StudentsList
@@ -44,4 +31,14 @@ const StudentPage = () => {
   )
 }
 
-export default StudentPage;
+const mapStateToProps = (state) => {
+  return {
+    students: state.students.data
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  studentsData: () => dispatch(getStudentsAsync())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(StudentPage);
