@@ -46,12 +46,13 @@ export const deleteStudentAsync = (student) => async dispatch => {
     dispatch(deleteStudent);
     try {
         const res = await axiosAPI.delete(`student/` + student.id);
-        const message=res.data.message;
-        const data = res.data;
-        dispatch(deleteStudentSuccess(data));
-        toast.success(message);
+        if (res.status === 204) {
+            alert('Objeto eliminado');
+            dispatch(getStudentAsync());
+            dispatch(deleteStudentSuccess());
+        } else alert('No se ha podido eliminar el objeto');
     } catch (err) {
         dispatch(deleteStudentFailure(err));
-        toast.success("Error deleting student. "+err);
+        alert("Error eliminando el objeto. " + err);
     }
 }

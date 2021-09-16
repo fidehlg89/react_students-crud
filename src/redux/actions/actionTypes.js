@@ -25,3 +25,29 @@ export const DELETE_STUDENT_SUCCESS="DELETE_STUDENT_SUCCESS"
 //delete STUDENT - failture
 export const DELETE_STUDENT_FAILURE="DELETE_STUDENT_FAILURE"
 /* END STUDENTS */
+
+/* STUDENTS */
+//get especific STUDENT
+export const GET_GROUP="GET_STUDENT"
+// get STUDENT list - success
+export const GET_GROUP_SUCCESS = 'GET_STUDENT_SUCCESS';
+//delete STUDENT - failure
+export const GET_GROUP_FAILURE="GET_STUDENT_FAILURE"
+
+//get GROUPSs list
+export const GET_GROUPS="GET_STUDENTS"
+// get GROUPS list - success
+export const GET_GROUPS_SUCCESS = 'GET_STUDENTS_SUCCESS';
+//delete GROUPS - failure
+export const GET_GROUPS_FAILURE="GET_STUDENTS_FAILURE"
+
+//get GROUPSs length
+export const COUNT_GROUPS="COUNT_STUDENTS"
+
+//delete GROUPS
+export const DELETE_GROUP="DELETE_STUDENT"
+//delete STUDENT - success
+export const DELETE_GROUP_SUCCESS="DELETE_STUDENT_SUCCESS"
+//delete GROUPS - failture
+export const DELETE_GROUP_FAILURE="DELETE_STUDENT_FAILURE"
+/* END GROUPSS */

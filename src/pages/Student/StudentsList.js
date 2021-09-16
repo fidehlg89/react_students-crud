@@ -3,7 +3,7 @@ import Table from "../../components/table";
 import { useHistory } from 'react-router-dom'
 import { Button, ButtonGroup, Icon, H5, Spinner } from "@blueprintjs/core";
 
-const StudentsList = ({ students, handleDelete, loading }) => {
+const StudentsList = ({ students, onDelete, loading }) => {
     const history = useHistory();
     const onEdit = (id) => {
         history.push("/estudiantes/editar/" + id);
@@ -17,6 +17,7 @@ const StudentsList = ({ students, handleDelete, loading }) => {
                 <Table>
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>Edad</th>
@@ -25,8 +26,9 @@ const StudentsList = ({ students, handleDelete, loading }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {students.map((item) => (
-                            <tr key={item.id}>
+                        {students.map((item, index) => (
+                            <tr key={index}>
+                                <td>{index+1}</td>
                                 <td>{item.name}</td>
                                 <td>{item.email}</td>
                                 <td>{item.age}</td>
@@ -36,7 +38,7 @@ const StudentsList = ({ students, handleDelete, loading }) => {
                                     <ButtonGroup minimal>
                                         <Button intent="success" onClick={() => onEdit(item.id)}><Icon icon="edit" size={12} /></Button>
                                         <span className="bp3-divider"></span>
-                                        <Button intent="danger" onClick={() => handleDelete(item)}><Icon icon="trash" size={12} /></Button>
+                                        <Button intent="danger" onClick={() => onDelete(item)}><Icon icon="trash" size={12} /></Button>
                                     </ButtonGroup>
                                 </td>
                             </tr>

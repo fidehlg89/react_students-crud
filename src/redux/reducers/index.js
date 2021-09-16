@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
-import students from './Student';
+import students from './Students';
+import groups from './Groups';
 
 // to combine all reducers together
 const appReducer = combineReducers({
-    students
+    students,
+    groups
 });
 
 export default appReducer;

@@ -1,47 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect} from "react";
 import GroupsList from "./GroupsList";
-import axiosAPI from "./../../service/api";
+import { connect } from 'react-redux';
+import { getGroupsAsync, deleteGroupAsync } from '../../redux/actions/asyncActions/groupAsync'
 
-const GroupPage = () => {
-  const [groups, setGroups] = useState([]);
-  const [loading, isLoading] = useState(true);
-
-  const getGroups = () => {
-    axiosAPI
-      .get('Group')
-      .then((response) => {
-        var data = response.data;
-        setGroups(data);
-        isLoading(false);
-      }).catch((error) => {
-        alert(error.response)
-      })
-  }
-
-  const handleDelete = (item) => {
-    axiosAPI
-      .delete('Group/' + item.id)
-      .then((response) => {
-        if (response.status === 204) {
-          alert("Objeto eliminado satisfactoriamente");
-          getGroups();
-        }
-      }).catch((error) => {
-        alert(error.response)
-      })
-  }
+const GroupPage = ({groups, groupsData, deleteGroup, loading='false'}) => {
 
   useEffect(() => {
-    getGroups();
-  }, [])
+    groupsData();
+  }, [groupsData]);
 
   return (
     <GroupsList
       groups={groups}
-      handleDelete={handleDelete}
+      onDelete={deleteGroup}
       loading={loading}
     />
   )
 }
 
-export default GroupPage;
+const mapStateToProps = (state) => {
+  return {
+    groups: state.groups.data
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  groupsData: () => dispatch(getGroupsAsync()),
+  deleteGroup: (item) => dispatch(deleteGroupAsync(item))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupPage);

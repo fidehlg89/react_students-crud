@@ -1,22 +1,9 @@
 import React, { useEffect } from "react";
 import StudentsList from "./StudentsList";
-import axiosAPI from "./../../service/api";
 import { connect } from 'react-redux';
-import { getStudentsAsync } from '../../redux/actions/asyncActions/studentAsync';
+import { getStudentsAsync, deleteStudentAsync } from '../../redux/actions/asyncActions/studentAsync';
 
-const StudentPage = ({ students, studentsData, loading = 'false' }) => {
-
-  const handleDelete = (item) => {
-    axiosAPI
-      .delete('student/' + item.id)
-      .then((response) => {
-        if (response.status === 204) {
-          alert("Objeto eliminado satisfactoriamente");
-        }
-      }).catch((error) => {
-        alert(error.response)
-      })
-  }
+const StudentPage = ({ students, studentsData, deleteStudent, loading = 'false' }) => {
 
   useEffect(() => {
     studentsData();
@@ -25,7 +12,7 @@ const StudentPage = ({ students, studentsData, loading = 'false' }) => {
   return (
     <StudentsList
       students={students}
-      handleDelete={handleDelete}
+      onDelete={deleteStudent}
       loading={loading}
     />
   )
@@ -38,7 +25,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  studentsData: () => dispatch(getStudentsAsync())
+  studentsData: () => dispatch(getStudentsAsync()),
+  deleteStudent: (item) => dispatch(deleteStudentAsync(item))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentPage);
