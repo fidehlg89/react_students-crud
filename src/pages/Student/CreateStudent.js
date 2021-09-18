@@ -3,25 +3,19 @@ import { useHistory } from 'react-router-dom';
 import {
     H3
 } from '@blueprintjs/core';
-import axiosAPI from "./../../service/api"
-import StudentForm from "./../../components/StudentForm"
+import StudentForm from "./../../components/StudentForm";
 
-const CreateStudent = () => {
+import { connect } from 'react-redux';
+import { createStudentAsync } from '../../redux/actions/asyncActions/studentAsync';
+
+const CreateStudent = ({createStudent}) => {
     const history = useHistory();
-    const [student, setStudent] = useState({name:"", email:"", age:"", sex:"", birthDate:""});
+    const [student, setStudent] = useState({ name: "", email: "", age: "", sex: "", birthDate: "" });
 
     const onSubmit = async e => {
         e.preventDefault();
-        axiosAPI
-            .post("student", student)
-            .then((response) => {
-                if (response.status === 201) {
-                    alert('Creado satisfactoriamente');
-                    history.push("/estudiantes");
-                }
-            }).catch((error) => {
-                alert('Error al procesar la información, intentelo más tarde. ' + error.response)
-            })
+        await createStudent(student);
+        history.push("/estudiantes");
     }
 
     const onChange = (e) => {
@@ -40,4 +34,8 @@ const CreateStudent = () => {
     )
 };
 
-export default CreateStudent;
+const mapDispatchToProps = (dispatch) => ({
+    createStudent: (item) => dispatch(createStudentAsync(item))
+})
+
+export default connect(null, mapDispatchToProps)(CreateStudent);

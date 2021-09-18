@@ -5,12 +5,14 @@ import axiosAPI from '../../service/api';
 import {
     H3
 } from '@blueprintjs/core';
+import { connect } from 'react-redux';
+import { updateStudentAsync } from '../../redux/actions/asyncActions/studentAsync';
 
-const UpdateStudent = () => {
-    const history=useHistory();
+const UpdateStudent = ({ updateStudent }) => {
+    const history = useHistory();
     const params = useParams();
     const id = params.id;
-    const [student, setStudent] = useState({name:"", email:"", age:"", sex:"", birthDate:""});
+    const [student, setStudent] = useState({ name: "", email: "", age: "", sex: "", birthDate: "" });
 
     const getStudent = (id) => {
         axiosAPI
@@ -25,16 +27,9 @@ const UpdateStudent = () => {
 
     const onSubmit = async e => {
         e.preventDefault();
-        axiosAPI
-            .put("student/" + id, {...student, "id":id})
-            .then((response) => {
-                if (response.status === 204) {
-                    alert('Actualizado satisfactoriamente');
-                    history.push("/estudiantes");
-                }
-            }).catch((error) => {
-                alert('Error al procesar la información, intentelo más tarde. ' + error.response)
-            })
+        await updateStudent(student);
+        history.push("/estudiantes");
+
     }
 
     const onChange = (e) => {
@@ -57,4 +52,8 @@ const UpdateStudent = () => {
     )
 };
 
-export default UpdateStudent;
+const mapDispatchToProps = (dispatch) => ({
+    updateStudent: (item) => dispatch(updateStudentAsync(item))
+})
+
+export default connect(null, mapDispatchToProps)(UpdateStudent);

@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import axiosAPI from "../../../service/api";
 import {
     getGroup, getGroupSuccess, getGroups, getGroupsSuccess, countGroups,
-    deleteGroup, deleteGroupSuccess, deleteGroupFailure
+    deleteGroup, /* deleteGroupSuccess, */ deleteGroupFailure
 } from "../groupActions";
 
 // get Group list
@@ -41,15 +41,27 @@ export const createGroupAsync = (group) => async dispatch => {
     }
 }
 
+// update group
+export const updateGroupAsync = (group) => async dispatch => {
+    console.log(group);
+    try {
+        const res = await axiosAPI.put('group/' + group.id, { ...group, "id": group.id });
+        console.log(res.data);
+        toast.success(res.data.message);
+    } catch (err) {
+        toast.success(err);
+    }
+}
+
 // delete group
 export const deleteGroupAsync = (group) => async dispatch => {
     dispatch(deleteGroup);
     try {
-        const res = await axiosAPI.delete(`group/` + group.id);
+        const res = await axiosAPI.delete('group/' + group.id);
         if (res.status === 204) {
             alert('Objeto eliminado');
             dispatch(getGroupsAsync());
-            dispatch(deleteGroupSuccess());
+            //dispatch(deleteGroupSuccess());
         } else alert('No se ha podido eliminar el objeto');
     } catch (err) {
         dispatch(deleteGroupFailure(err));

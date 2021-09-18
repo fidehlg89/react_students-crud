@@ -48,7 +48,10 @@ export default function common(state = initialState, action) {
                 ...state
             }
         case DELETE_STUDENT_SUCCESS:
-            return {...state}
+            return {
+                ...state,
+                data: action.payload.data
+            }
         case DELETE_STUDENT_FAILURE:
             return {
                 ...state,
@@ -57,7 +60,7 @@ export default function common(state = initialState, action) {
         case MESSAGE:
             return {
                 ...state,
-                message:action.payload.message
+                message: action.payload.message
             }
         default:
             return state

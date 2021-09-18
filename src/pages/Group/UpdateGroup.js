@@ -5,8 +5,10 @@ import axiosAPI from '../../service/api';
 import {
     H3
 } from '@blueprintjs/core';
+import { connect } from 'react-redux';
+import { updateGroupAsync } from '../../redux/actions/asyncActions/groupAsync';
 
-const UpdateGroup = () => {
+const UpdateGroup = ({updateGroup}) => {
     const history=useHistory();
     const params = useParams();
     const id = params.id;
@@ -25,16 +27,8 @@ const UpdateGroup = () => {
 
     const onSubmit = async e => {
         e.preventDefault();
-        axiosAPI
-            .put("group/" + id, {...group, "id":id})
-            .then((response) => {
-                if (response.status === 204) {
-                    alert('Actualizado satisfactoriamente');
-                    history.push("/grupos");
-                }
-            }).catch((error) => {
-                alert('Error al procesar la información, intentelo más tarde. ' + error.response)
-            })
+        await updateGroup(group);
+        history.push("/grupos");
     }
 
     const onChange = (e) => {
@@ -57,4 +51,8 @@ const UpdateGroup = () => {
     )
 };
 
-export default UpdateGroup;
+const mapDispatchToProps = (dispatch) => ({
+    updateGroup: (item) => dispatch(updateGroupAsync(item))
+})
+
+export default connect(null, mapDispatchToProps)(UpdateGroup);

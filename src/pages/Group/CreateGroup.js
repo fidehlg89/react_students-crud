@@ -3,25 +3,20 @@ import { useHistory } from 'react-router-dom';
 import {
     H3
 } from '@blueprintjs/core';
-import axiosAPI from "./../../service/api"
 import GroupForm from '../../components/GroupForm';
 
-const CreateGroup = () => {
+
+import { connect } from 'react-redux';
+import { createGroupAsync } from '../../redux/actions/asyncActions/groupAsync';
+
+const CreateGroup = ({createGroup}) => {
     const history = useHistory();
     const [group, setGroup] = useState({name:""});
 
     const onSubmit = async e => {
         e.preventDefault();
-        axiosAPI
-            .post("group", group)
-            .then((response) => {
-                if (response.status === 201) {
-                    alert('Creado satisfactoriamente');
-                    history.push("/grupos");
-                }
-            }).catch((error) => {
-                alert('Error al procesar la información, intentelo más tarde. ' + error.response)
-            })
+        await createGroup(group);
+        history.push("/grupos");
     }
 
     const onChange = (e) => {
@@ -40,4 +35,8 @@ const CreateGroup = () => {
         )
 };
 
-export default CreateGroup;
+const mapDispatchToProps = (dispatch) => ({
+    createGroup: (item) => dispatch(createGroupAsync(item))
+})
+
+export default connect(null, mapDispatchToProps)(CreateGroup);
