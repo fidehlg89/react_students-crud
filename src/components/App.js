@@ -15,7 +15,7 @@ import { Provider } from 'react-redux';
 
 const App = () => {
     return (
-        <div className="container">
+        <div>
             <Provider store={store}>
                 <BrowserRouter>
                     <Navigation />

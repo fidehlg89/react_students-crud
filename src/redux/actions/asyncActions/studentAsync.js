@@ -54,7 +54,7 @@ export const deleteStudentAsync = (student) => async dispatch => {
     dispatch(deleteStudent);
     try {
         const res = await axiosAPI.delete('student/' + student.id);
-        if (res.status === 204) {
+        if (res.status === 200) {
             alert('Objeto eliminado');
             dispatch(getStudentsAsync());
             //dispatch(deleteStudentSuccess());

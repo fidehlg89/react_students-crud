@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Navbar, Alignment, Button } from "@blueprintjs/core";
 
 const Navigation = (props) => (
-    <Navbar className="bp3-dark" style={{height:40+'px'}}>
+    <Navbar className="bp3-dark" style={{height:40+'px'}} fixedToTop="true">
         <Navbar.Group align={Alignment.LEFT} style={{height:40+'px'}}>
             <Navbar.Heading style={{margin: '0 auto', width: 30+'px'}}>
                 <Link to="/" className="text-white navbar-brand">
